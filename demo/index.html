@@ -24,6 +24,9 @@
     --hair: #ececec;
     --bg: #ffffff;
     --card: #fafafa;
+    /* easing tokens */
+    --ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+    --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
   }
   * { box-sizing: border-box; }
   html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -45,8 +48,9 @@
     display: flex; align-items: center; gap: 2px; background: #fff; border: 1px solid var(--hair);
     border-radius: 999px; padding: 5px; box-shadow: 0 6px 22px rgb(0 0 0 / .08); }
   .tb-btn { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 999px; position: relative;
-    display: grid; place-items: center; color: var(--faint); transition: background .12s, color .12s; }
+    display: grid; place-items: center; color: var(--faint); transition: background .12s, color .12s, transform .12s var(--ease-out-cubic); }
   .tb-btn:hover { background: var(--card); color: var(--muted); }
+  .tb-btn:active { transform: scale(.92); }
   .tb-btn.active { background: rgb(var(--tb) / .12); color: rgb(var(--tb)); }
   .tb-btn.power.active { background: rgb(var(--tb)); color: #fff; }
   .tb-btn.dim { opacity: .35; pointer-events: none; }
@@ -55,7 +59,9 @@
   .tb-sep { width: 1px; height: 18px; background: var(--hair); margin: 0 3px; }
   .tb-menu { position: absolute; bottom: calc(100% + 7px); top: auto; left: 0; width: 222px; background: #fff;
     border: 1px solid var(--hair); border-radius: 12px; box-shadow: 0 10px 28px rgb(0 0 0 / .12); padding: 12px; }
+  .tb-menu { transform-origin: bottom left; animation: menu-in .18s var(--ease-out-cubic); }
   .tb-menu[hidden] { display: none; }
+  @keyframes menu-in { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
   .tb-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; font-size: 12px; color: var(--muted); }
   .tb-seg { display: inline-flex; gap: 2px; background: var(--card); border: 1px solid var(--hair); border-radius: 7px; padding: 2px; }
   .tb-seg button { all: unset; cursor: pointer; font: 11px "Geist Mono", monospace; padding: 2px 7px; border-radius: 5px; color: var(--faint); }
@@ -110,16 +116,42 @@
   .cap { position: absolute; left: 0; top: 0; font: 500 9px/1.4 "Geist Mono", monospace;
     color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; background: rgb(var(--c)/.92); }
 
+  /* showcase draw-in: guides sketch themselves over the static layout */
+  .ov > div { animation: draw-v .5s var(--ease-out-quint) backwards; }
+  .ov .cv { transform-origin: top center; }
+  .ov .ch { transform-origin: center left; animation-name: draw-h; }
+  .ov .pl { animation-delay: 0ms; }
+  .ov .pr { animation-delay: .07s; }
+  .ov .cv { animation-delay: .18s; }
+  .ov .ch { animation-delay: .26s; }
+  @keyframes draw-v { from { transform: translateX(var(--tx,0)) scaleY(0); } to { transform: translateX(var(--tx,0)) scaleY(1); } }
+  @keyframes draw-h { from { transform: translateY(-50%) scaleX(0); } to { transform: translateY(-50%) scaleX(1); } }
+  .ov .cv { --tx: -50%; }
+  .showcase .cap { animation: cap-in .3s var(--ease-out-cubic) .42s backwards; }
+  @keyframes cap-in { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+
   .depthdemo { position: relative; display: flex; width: 100%; max-width: 360px; height: 240px; margin: 22px auto 0;
     border: 1px solid var(--hair); border-radius: 14px; background: var(--card); }
   .depthdemo .d { position: relative; display: flex; flex: 1; padding: 8px; min-width: 0;
-    box-shadow: inset 0 0 0 1px rgb(0 0 0 / .04); border-radius: 5px; }
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / .04); border-radius: 5px;
+    transition: box-shadow .15s var(--ease-out-cubic), background-color .15s var(--ease-out-cubic); }
+  /* coloured rings when "show all 12 depths" is on (JS sets --dc per box) */
+  .depthdemo.on, .depthdemo.on .d { box-shadow: inset 0 0 0 1px rgb(var(--dc) / .6); }
+  /* hover-to-pop: only the deepest box under the cursor lights up and lifts above the rest */
+  .depthdemo .d:hover:not(:has(.d:hover)) {
+    background-color: rgb(var(--dc, 0 0 0) / .16);
+    box-shadow: inset 0 0 0 1.5px rgb(var(--dc, 0 0 0)), 0 6px 18px rgb(var(--dc, 0 0 0) / .3);
+    z-index: 3; }
+  /* pull the hovered box's name forward, above the nested boxes drawn over it */
+  .dd-label { z-index: 1; transition: transform .15s var(--ease-out-cubic), box-shadow .15s var(--ease-out-cubic); }
+  .depthdemo .d:hover:not(:has(.d:hover)) > .dd-label {
+    z-index: 6; transform: translateY(-2px); box-shadow: 0 3px 10px rgb(var(--dc, 0 0 0) / .45); }
   .dd-label { position: absolute; top: 0; left: 0; font: 500 9px/1.4 "Geist Mono", monospace;
     color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
   .dd-switch { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 18px; font-size: 13px; color: var(--muted); cursor: pointer; user-select: none; }
   .dd-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
   .dd-switch .track { position: relative; width: 38px; height: 22px; border-radius: 999px; background: var(--hair); transition: background .18s; flex: none; }
-  .dd-switch .track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .18s; }
+  .dd-switch .track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .18s var(--ease-out-cubic); }
   .dd-switch input:checked + .track { background: rgb(var(--pink)); }
   .dd-switch input:checked + .track::after { transform: translateX(16px); }
   .pal-min { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 22px; opacity: .7; transition: opacity .18s; }
@@ -178,7 +210,7 @@
   .setup-tab { all: unset; cursor: pointer; font-size: 13px; padding: 6px 13px; border-radius: 8px; color: var(--muted); transition: color .15s; }
   .setup-tab.active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .07); }
   .panel { display: none; }
-  .panel.active { display: block; animation: fade .25s ease; }
+  .panel.active { display: block; animation: fade .2s var(--ease-out-cubic); }
   @keyframes fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   .step { display: flex; gap: 14px; padding: 6px 0 18px; }
   .step .num { flex: none; width: 22px; height: 22px; border-radius: 999px; border: 1px solid var(--hair);
@@ -193,6 +225,14 @@
     font: 500 11px "Geist Mono", monospace; color: var(--faint); background: #fff; border: 1px solid var(--hair);
     padding: 3px 8px; border-radius: 6px; }
   .codeblock .copy:hover { color: var(--ink); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
 </style>
 </head>
 <body>
@@ -481,11 +521,13 @@
       const chain = [depthdemo];
       let cur = depthdemo.querySelector(":scope > .d");
       while (cur) { chain.push(cur); cur = cur.querySelector(":scope > .d"); }
+      // give every box its depth colour up-front so hover-to-pop works on/off
+      chain.forEach((node, i) => node.style.setProperty("--dc", DEPTH[Math.min(i, DEPTH.length - 1)]));
       ddToggle.addEventListener("change", () => {
         const on = ddToggle.checked;
+        depthdemo.classList.toggle("on", on);
         chain.forEach((node, i) => {
           const c = DEPTH[Math.min(i, DEPTH.length - 1)];
-          node.style.boxShadow = on ? `inset 0 0 0 1px rgb(${c} / .6)` : "";
           let lbl = node.querySelector(":scope > .dd-label");
           if (on) {
             if (!lbl) { lbl = document.createElement("span"); lbl.className = "dd-label"; node.prepend(lbl); }
