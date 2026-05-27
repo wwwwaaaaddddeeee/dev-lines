@@ -12,12 +12,12 @@
     --pink: 251 7 12; /* #fb070c */
     --tb: 113 113 122; /* toolbar accent — muted neutral gray (#71717a) */
     --cyan: 24 207 255;
-    --blue: 42 82 230;
-    --red: 222 56 60;
-    --green: 83 173 93;
-    --purple: 175 61 201;
-    --orange: 224 107 43;
-    --teal: 63 142 107;
+    --blue: 24 83 239;
+    --red: 242 26 50;
+    --green: 29 206 105;
+    --purple: 190 49 208;
+    --orange: 241 98 0;
+    --teal: 22 166 126;
     --ink: #0a0a0a;
     --muted: #6b7280;
     --faint: #9ca3af;
@@ -41,7 +41,7 @@
   a { color: inherit; }
 
   /* floating toolbar, à la the real tool */
-  .toolbar { position: fixed; top: 16px; left: 16px; z-index: 2147483601;
+  .toolbar { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 2147483601;
     display: flex; align-items: center; gap: 2px; background: #fff; border: 1px solid var(--hair);
     border-radius: 999px; padding: 5px; box-shadow: 0 6px 22px rgb(0 0 0 / .08); }
   .tb-btn { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 999px; position: relative;
@@ -53,7 +53,7 @@
   .tb-btn .mode-dot { position: absolute; bottom: 3px; right: 4px; width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--tb)); display: none; }
   .tb-btn.active .mode-dot { display: block; }
   .tb-sep { width: 1px; height: 18px; background: var(--hair); margin: 0 3px; }
-  .tb-menu { position: absolute; top: calc(100% + 7px); left: 0; width: 222px; background: #fff;
+  .tb-menu { position: absolute; bottom: calc(100% + 7px); top: auto; left: 0; width: 222px; background: #fff;
     border: 1px solid var(--hair); border-radius: 12px; box-shadow: 0 10px 28px rgb(0 0 0 / .12); padding: 12px; }
   .tb-menu[hidden] { display: none; }
   .tb-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; font-size: 12px; color: var(--muted); }
@@ -109,6 +109,11 @@
   .ring { box-shadow: inset 0 0 0 1px rgb(var(--c)/.65); position: relative; }
   .cap { position: absolute; left: 0; top: 0; font: 500 9px/1.4 "Geist Mono", monospace;
     color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; background: rgb(var(--c)/.92); }
+
+  .depthdemo { display: flex; width: 100%; max-width: 360px; height: 240px; margin: 22px auto 0;
+    border: 1px solid var(--hair); border-radius: 14px; background: var(--card); }
+  .depthdemo .d { display: flex; flex: 1; padding: 8px; min-width: 0;
+    box-shadow: inset 0 0 0 1px rgb(0 0 0 / .04); border-radius: 5px; }
 
   section { padding: 44px 0; border-top: 1px solid var(--hair); }
   h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin: 0 0 22px; }
@@ -214,10 +219,10 @@
         <input type="color" id="c-pad" value="#18cfff" title="Padding" />
       </span></div>
       <div class="tb-row"><span>Depth palette</span><span class="tb-sw" id="c-depth">
-        <input type="color" value="#1d1d1d" /><input type="color" value="#9da4b5" /><input type="color" value="#dd88f0" /><input type="color" value="#af3dc9" /><input type="color" value="#2a52e6" /><input type="color" value="#4ba5f8" /><input type="color" value="#f0ae49" /><input type="color" value="#e06b2b" /><input type="color" value="#3f8e6b" /><input type="color" value="#53ad5d" /><input type="color" value="#ee7970" /><input type="color" value="#de383c" />
+        <input type="color" value="#1d1d1d" /><input type="color" value="#9ba4b7" /><input type="color" value="#eb83f6" /><input type="color" value="#be31d0" /><input type="color" value="#1853ef" /><input type="color" value="#00a8ff" /><input type="color" value="#ffb522" /><input type="color" value="#f16200" /><input type="color" value="#16a67e" /><input type="color" value="#1dce69" /><input type="color" value="#ff8baa" /><input type="color" value="#f21a32" />
       </span></div>
       <div class="tb-row"><span>Position</span>
-        <span class="tb-seg" id="c-pos"><button data-pos="tl" class="on">TL</button><button data-pos="tr">TR</button><button data-pos="bl">BL</button><button data-pos="br">BR</button></span>
+        <span class="tb-seg" id="c-pos"><button data-pos="tl">TL</button><button data-pos="tr">TR</button><button data-pos="bl">BL</button><button data-pos="br">BR</button></span>
       </div>
       <div class="keys"><b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · <b>C</b> copy · <b>Alt</b> dist · <b>Esc</b> off</div>
     </div>
@@ -265,6 +270,12 @@
     </header>
 
     <section>
+      <h2>Depth → color</h2>
+      <p class="lead">Outlines are colored by nesting depth. Toggle the overlay (the ⏻ in the toolbar) to paint these 12 nested boxes graphite → red — the full palette, max 12.</p>
+      <div class="depthdemo" data-devlines-name="Depth demo"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"></div></div></div></div></div></div></div></div></div></div></div></div>
+    </section>
+
+    <section>
       <h2>Features</h2>
       <div class="feat"><span class="ic">⌗</span><div><b>Center cross</b> <span>— vertical + horizontal viewport center.</span></div></div>
       <div class="feat"><span class="ic">│</span><div><b>Content & padding edges</b> <span>— guides at your container width and page padding.</span></div></div>
@@ -287,17 +298,17 @@
 
         <div class="sub-h">Section outlines (by depth, wraps after 12)</div>
         <div class="sw"><span class="chip" style="background:#1d1d1d"></span><span class="lbl">Depth 1</span><span class="hex">#1d1d1d</span></div>
-        <div class="sw"><span class="chip" style="background:#9da4b5"></span><span class="lbl">Depth 2</span><span class="hex">#9da4b5</span></div>
-        <div class="sw"><span class="chip" style="background:#dd88f0"></span><span class="lbl">Depth 3</span><span class="hex">#dd88f0</span></div>
-        <div class="sw"><span class="chip" style="background:#af3dc9"></span><span class="lbl">Depth 4</span><span class="hex">#af3dc9</span></div>
-        <div class="sw"><span class="chip" style="background:#2a52e6"></span><span class="lbl">Depth 5</span><span class="hex">#2a52e6</span></div>
-        <div class="sw"><span class="chip" style="background:#4ba5f8"></span><span class="lbl">Depth 6</span><span class="hex">#4ba5f8</span></div>
-        <div class="sw"><span class="chip" style="background:#f0ae49"></span><span class="lbl">Depth 7</span><span class="hex">#f0ae49</span></div>
-        <div class="sw"><span class="chip" style="background:#e06b2b"></span><span class="lbl">Depth 8</span><span class="hex">#e06b2b</span></div>
-        <div class="sw"><span class="chip" style="background:#3f8e6b"></span><span class="lbl">Depth 9</span><span class="hex">#3f8e6b</span></div>
-        <div class="sw"><span class="chip" style="background:#53ad5d"></span><span class="lbl">Depth 10</span><span class="hex">#53ad5d</span></div>
-        <div class="sw"><span class="chip" style="background:#ee7970"></span><span class="lbl">Depth 11</span><span class="hex">#ee7970</span></div>
-        <div class="sw"><span class="chip" style="background:#de383c"></span><span class="lbl">Depth 12</span><span class="hex">#de383c</span></div>
+        <div class="sw"><span class="chip" style="background:#9ba4b7"></span><span class="lbl">Depth 2</span><span class="hex">#9ba4b7</span></div>
+        <div class="sw"><span class="chip" style="background:#eb83f6"></span><span class="lbl">Depth 3</span><span class="hex">#eb83f6</span></div>
+        <div class="sw"><span class="chip" style="background:#be31d0"></span><span class="lbl">Depth 4</span><span class="hex">#be31d0</span></div>
+        <div class="sw"><span class="chip" style="background:#1853ef"></span><span class="lbl">Depth 5</span><span class="hex">#1853ef</span></div>
+        <div class="sw"><span class="chip" style="background:#00a8ff"></span><span class="lbl">Depth 6</span><span class="hex">#00a8ff</span></div>
+        <div class="sw"><span class="chip" style="background:#ffb522"></span><span class="lbl">Depth 7</span><span class="hex">#ffb522</span></div>
+        <div class="sw"><span class="chip" style="background:#f16200"></span><span class="lbl">Depth 8</span><span class="hex">#f16200</span></div>
+        <div class="sw"><span class="chip" style="background:#16a67e"></span><span class="lbl">Depth 9</span><span class="hex">#16a67e</span></div>
+        <div class="sw"><span class="chip" style="background:#1dce69"></span><span class="lbl">Depth 10</span><span class="hex">#1dce69</span></div>
+        <div class="sw"><span class="chip" style="background:#ff8baa"></span><span class="lbl">Depth 11</span><span class="hex">#ff8baa</span></div>
+        <div class="sw"><span class="chip" style="background:#f21a32"></span><span class="lbl">Depth 12</span><span class="hex">#f21a32</span></div>
       </div>
     </section>
 
