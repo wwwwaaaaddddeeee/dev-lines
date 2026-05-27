@@ -9,15 +9,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --pink: 236 85 40; /* #ec5528 */
-    --tb: 236 85 40;
+    --pink: 237 116 241; /* #ed74f1 */
+    --tb: 237 116 241;
     --cyan: 6 182 212;
-    --blue: 59 130 246;
-    --red: 239 68 68;
-    --green: 34 197 94;
-    --purple: 168 85 247;
-    --orange: 249 115 22;
-    --teal: 20 184 166;
+    --blue: 53 122 246;
+    --red: 217 56 49;
+    --green: 43 212 107;
+    --purple: 116 60 233;
+    --orange: 236 85 40;
+    --teal: 20 200 200;
     --ink: #0a0a0a;
     --muted: #6b7280;
     --faint: #9ca3af;
@@ -209,11 +209,11 @@
       </div>
       <div class="tb-row"><span>Distances</span><span style="color:var(--faint)">hold Alt</span></div>
       <div class="tb-row"><span>Guide colors</span><span class="tb-sw">
-        <input type="color" id="c-line" value="#ec5528" title="Center &amp; width" />
+        <input type="color" id="c-line" value="#ed74f1" title="Center &amp; width" />
         <input type="color" id="c-pad" value="#06b6d4" title="Padding" />
       </span></div>
       <div class="tb-row"><span>Depth palette</span><span class="tb-sw" id="c-depth">
-        <input type="color" value="#3b82f6" /><input type="color" value="#ef4444" /><input type="color" value="#22c55e" /><input type="color" value="#a855f7" /><input type="color" value="#f97316" /><input type="color" value="#14b8a6" />
+        <input type="color" value="#357af6" /><input type="color" value="#d93831" /><input type="color" value="#2bd46b" /><input type="color" value="#743ce9" /><input type="color" value="#ec5528" /><input type="color" value="#14c8c8" />
       </span></div>
       <div class="tb-row"><span>Position</span>
         <span class="tb-seg" id="c-pos"><button data-pos="tl" class="on">TL</button><button data-pos="tr">TR</button><button data-pos="bl">BL</button><button data-pos="br">BR</button></span>
@@ -226,7 +226,7 @@
     <header class="hero">
       <div class="mark">
         <svg class="logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 85 40)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(237 116 241)" stroke-width="3.4" stroke-linecap="round"/>
           <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
         </svg>
         <span class="name">dev-lines</span>
@@ -280,17 +280,17 @@
       <h2>Palette</h2>
       <div class="palette">
         <div class="sub-h">Guides</div>
-        <div class="sw"><span class="chip" style="background:#ec5528"></span><span class="lbl">Center &amp; width</span><span class="hex">#ec5528</span></div>
+        <div class="sw"><span class="chip" style="background:#ed74f1"></span><span class="lbl">Center &amp; width</span><span class="hex">#ed74f1</span></div>
         <div class="sw"><span class="chip" style="background:#06b6d4"></span><span class="lbl">Padding</span><span class="hex">#06b6d4</span></div>
         <div class="sw"><span class="chip" style="background:#f59e0b"></span><span class="lbl">Distances (Alt)</span><span class="hex">#f59e0b</span></div>
 
         <div class="sub-h">Section outlines (by depth)</div>
-        <div class="sw"><span class="chip" style="background:#3b82f6"></span><span class="lbl">Depth 1</span><span class="hex">#3b82f6</span></div>
-        <div class="sw"><span class="chip" style="background:#ef4444"></span><span class="lbl">Depth 2</span><span class="hex">#ef4444</span></div>
-        <div class="sw"><span class="chip" style="background:#22c55e"></span><span class="lbl">Depth 3</span><span class="hex">#22c55e</span></div>
-        <div class="sw"><span class="chip" style="background:#a855f7"></span><span class="lbl">Depth 4</span><span class="hex">#a855f7</span></div>
-        <div class="sw"><span class="chip" style="background:#f97316"></span><span class="lbl">Depth 5</span><span class="hex">#f97316</span></div>
-        <div class="sw"><span class="chip" style="background:#14b8a6"></span><span class="lbl">Depth 6</span><span class="hex">#14b8a6</span></div>
+        <div class="sw"><span class="chip" style="background:#357af6"></span><span class="lbl">Depth 1</span><span class="hex">#357af6</span></div>
+        <div class="sw"><span class="chip" style="background:#d93831"></span><span class="lbl">Depth 2</span><span class="hex">#d93831</span></div>
+        <div class="sw"><span class="chip" style="background:#2bd46b"></span><span class="lbl">Depth 3</span><span class="hex">#2bd46b</span></div>
+        <div class="sw"><span class="chip" style="background:#743ce9"></span><span class="lbl">Depth 4</span><span class="hex">#743ce9</span></div>
+        <div class="sw"><span class="chip" style="background:#ec5528"></span><span class="lbl">Depth 5</span><span class="hex">#ec5528</span></div>
+        <div class="sw"><span class="chip" style="background:#14c8c8"></span><span class="lbl">Depth 6</span><span class="hex">#14c8c8</span></div>
       </div>
     </section>
 
@@ -391,7 +391,7 @@
     <footer>
       <div class="left">
         <svg class="foot-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 85 40)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(237 116 241)" stroke-width="3.4" stroke-linecap="round"/>
           <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
         </svg>
         <span class="lic">© 2026 <a href="https://www.wa-de.org" target="_blank" rel="noopener noreferrer">wa-de</a> · <a href="#">MIT License</a> · <a href="changelog.html">Changelog</a></span>
@@ -430,7 +430,7 @@
   <!-- live: run the real engine on this very page, driven by the toolbar -->
   <script type="module">
     import { createDevLines } from "./dev-lines.js";
-    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false, lineColor: "236 85 40" });
+    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false, lineColor: "237 116 241" });
     const $ = (id) => document.getElementById(id);
     const power = $("tb-power"), guides = $("tb-guides"), outlines = $("tb-outlines"),
           labels = $("tb-labels"), copy = $("tb-copy"), more = $("tb-more"),

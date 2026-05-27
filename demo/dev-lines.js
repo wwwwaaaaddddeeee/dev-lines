@@ -2,22 +2,22 @@
 var STORAGE_KEY = "dev-lines:enabled";
 var Z = 2147483600;
 var DEFAULT_DEPTH_COLORS = [
-  "59 130 246",
-  // blue-500
-  "239 68 68",
-  // red-500
-  "34 197 94",
-  // green-500
-  "168 85 247",
-  // purple-500
-  "249 115 22",
-  // orange-500
-  "20 184 166"
-  // teal-500
+  "53 122 246",
+  // #357af6 blue
+  "217 56 49",
+  // #d93831 red
+  "43 212 107",
+  // #2bd46b green
+  "116 60 233",
+  // #743ce9 violet
+  "236 85 40",
+  // #ec5528 orange
+  "20 200 200"
+  // #14c8c8 teal
 ];
 var DEFAULTS = {
-  lineColor: "236 85 40",
-  // #ec5528
+  lineColor: "237 116 241",
+  // #ed74f1
   paddingColor: "6 182 212",
   // cyan-500
   measureColor: "245 158 11",
