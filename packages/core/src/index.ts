@@ -55,6 +55,8 @@ export interface DevLinesController {
   cycleLabels(mode?: LabelMode): void;
   toggleOutlines(on?: boolean): void;
   toggleGuides(on?: boolean): void;
+  /** Live-update visual options (colors, contentWidth, paddingX) and redraw. */
+  update(options: Partial<DevLinesOptions>): void;
   /** Copy the hovered (or last-hovered) box's handle for agent handoff. */
   copy(): void;
   getState(): { enabled: boolean; outlines: boolean; guides: boolean; labels: LabelMode };
@@ -75,7 +77,7 @@ const DEFAULT_DEPTH_COLORS = [
 ];
 
 const DEFAULTS = {
-  lineColor: "236 72 153", // pink-500
+  lineColor: "236 85 40", // #ec5528
   paddingColor: "6 182 212", // cyan-500
   measureColor: "245 158 11", // amber-500
   sections: true,
@@ -100,7 +102,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
   if (!isBrowser) return noopController();
 
   const opts = { ...DEFAULTS, ...options };
-  const depthColors = options.depthColors ?? DEFAULT_DEPTH_COLORS;
+  let depthColors = options.depthColors ?? DEFAULT_DEPTH_COLORS;
   const labels: Required<LabelOptions> = { ...DEFAULT_LABELS, ...options.labels };
 
   let enabled = false;
@@ -450,6 +452,23 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
     drawLabels();
   }
 
+  function update(next: Partial<DevLinesOptions>) {
+    if (next.lineColor !== undefined) opts.lineColor = next.lineColor;
+    if (next.paddingColor !== undefined) opts.paddingColor = next.paddingColor;
+    if (next.measureColor !== undefined) opts.measureColor = next.measureColor;
+    if (next.depthColors !== undefined) depthColors = next.depthColors;
+    if (next.contentWidth !== undefined) opts.contentWidth = next.contentWidth;
+    if (next.paddingX !== undefined) opts.paddingX = next.paddingX;
+    // guides are built once; rebuild the layer so new colors/widths take effect.
+    if (root && guidesLayer) {
+      const fresh = buildGuides();
+      fresh.style.display = guidesOn ? "" : "none";
+      root.replaceChild(fresh, guidesLayer);
+      guidesLayer = fresh;
+    }
+    drawSections();
+  }
+
   function typingInField() {
     const t = document.activeElement;
     return !!t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || (t as HTMLElement).isContentEditable);
@@ -512,6 +531,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
     cycleLabels,
     toggleOutlines,
     toggleGuides,
+    update,
     copy: copyHandle,
     getState: () => ({ enabled, outlines: outlinesOn, guides: guidesOn, labels: labels.mode }),
     refresh: drawSections,
@@ -526,7 +546,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
 function noopController(): DevLinesController {
   return {
     enable() {}, disable() {}, toggle() {}, isEnabled: () => false,
-    cycleLabels() {}, toggleOutlines() {}, toggleGuides() {}, copy() {},
+    cycleLabels() {}, toggleOutlines() {}, toggleGuides() {}, update() {}, copy() {},
     getState: () => ({ enabled: false, outlines: false, guides: false, labels: "off" }),
     refresh() {}, destroy() {},
   };

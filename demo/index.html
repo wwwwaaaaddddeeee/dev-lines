@@ -9,7 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --pink: 236 72 153;
+    --pink: 236 85 40; /* #ec5528 */
+    --tb: 236 85 40;
     --cyan: 6 182 212;
     --blue: 59 130 246;
     --red: 239 68 68;
@@ -46,10 +47,10 @@
   .tb-btn { all: unset; cursor: pointer; width: 30px; height: 28px; border-radius: 7px; position: relative;
     display: grid; place-items: center; color: var(--faint); transition: background .12s, color .12s; }
   .tb-btn:hover { background: var(--card); color: var(--muted); }
-  .tb-btn.active { background: rgb(var(--pink) / .1); color: rgb(var(--pink)); }
-  .tb-btn.power.active { background: rgb(var(--pink)); color: #fff; }
+  .tb-btn.active { background: rgb(var(--tb) / .12); color: rgb(var(--tb)); }
+  .tb-btn.power.active { background: rgb(var(--tb)); color: #fff; }
   .tb-btn.dim { opacity: .35; pointer-events: none; }
-  .tb-btn .mode-dot { position: absolute; bottom: 3px; right: 4px; width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--pink)); display: none; }
+  .tb-btn .mode-dot { position: absolute; bottom: 3px; right: 4px; width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--tb)); display: none; }
   .tb-btn.active .mode-dot { display: block; }
   .tb-sep { width: 1px; height: 18px; background: var(--hair); margin: 0 3px; }
   .tb-menu { position: absolute; top: calc(100% + 7px); left: 0; width: 222px; background: #fff;
@@ -61,6 +62,10 @@
   .tb-seg button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
   .tb-sw { display: flex; gap: 5px; }
   .tb-sw .chip { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
+  .tb-sw input[type=color] { -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
+    border: none; border-radius: 4px; padding: 0; cursor: pointer; background: none; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .12); }
+  .tb-sw input[type=color]::-webkit-color-swatch-wrapper { padding: 0; }
+  .tb-sw input[type=color]::-webkit-color-swatch { border: none; border-radius: 4px; }
   .tb-menu .keys { margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--hair); font: 11px/1.8 "Geist Mono", monospace; color: var(--faint); }
   .tb-menu .keys b { color: var(--muted); font-weight: 600; }
 
@@ -203,9 +208,16 @@
         </span>
       </div>
       <div class="tb-row"><span>Distances</span><span style="color:var(--faint)">hold Alt</span></div>
-      <div class="tb-row"><span>Guide colors</span><span class="tb-sw"><span class="chip" style="background:#ec4899"></span><span class="chip" style="background:#06b6d4"></span></span></div>
-      <div class="tb-row"><span>Depth palette</span><span class="tb-sw"><span class="chip" style="background:#3b82f6"></span><span class="chip" style="background:#ef4444"></span><span class="chip" style="background:#22c55e"></span><span class="chip" style="background:#a855f7"></span></span></div>
-      <div class="tb-row"><span>Position</span><span style="color:var(--faint)">top-left</span></div>
+      <div class="tb-row"><span>Guide colors</span><span class="tb-sw">
+        <input type="color" id="c-line" value="#ec5528" title="Center &amp; width" />
+        <input type="color" id="c-pad" value="#06b6d4" title="Padding" />
+      </span></div>
+      <div class="tb-row"><span>Depth palette</span><span class="tb-sw" id="c-depth">
+        <input type="color" value="#3b82f6" /><input type="color" value="#ef4444" /><input type="color" value="#22c55e" /><input type="color" value="#a855f7" /><input type="color" value="#f97316" /><input type="color" value="#14b8a6" />
+      </span></div>
+      <div class="tb-row"><span>Position</span>
+        <span class="tb-seg" id="c-pos"><button data-pos="tl" class="on">TL</button><button data-pos="tr">TR</button><button data-pos="bl">BL</button><button data-pos="br">BR</button></span>
+      </div>
       <div class="keys"><b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · <b>C</b> copy · <b>Alt</b> dist · <b>Esc</b> off</div>
     </div>
   </div>
@@ -214,7 +226,7 @@
     <header class="hero">
       <div class="mark">
         <svg class="logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 72 153)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 85 40)" stroke-width="3.4" stroke-linecap="round"/>
           <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
         </svg>
         <span class="name">dev-lines</span>
@@ -268,7 +280,7 @@
       <h2>Palette</h2>
       <div class="palette">
         <div class="sub-h">Guides</div>
-        <div class="sw"><span class="chip" style="background:#ec4899"></span><span class="lbl">Center &amp; width</span><span class="hex">#ec4899</span></div>
+        <div class="sw"><span class="chip" style="background:#ec5528"></span><span class="lbl">Center &amp; width</span><span class="hex">#ec5528</span></div>
         <div class="sw"><span class="chip" style="background:#06b6d4"></span><span class="lbl">Padding</span><span class="hex">#06b6d4</span></div>
         <div class="sw"><span class="chip" style="background:#f59e0b"></span><span class="lbl">Distances (Alt)</span><span class="hex">#f59e0b</span></div>
 
@@ -379,7 +391,7 @@
     <footer>
       <div class="left">
         <svg class="foot-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 72 153)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 85 40)" stroke-width="3.4" stroke-linecap="round"/>
           <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
         </svg>
         <span class="lic">© 2026 <a href="https://www.wa-de.org" target="_blank" rel="noopener noreferrer">wa-de</a> · <a href="#">MIT License</a> · <a href="changelog.html">Changelog</a></span>
@@ -418,7 +430,7 @@
   <!-- live: run the real engine on this very page, driven by the toolbar -->
   <script type="module">
     import { createDevLines } from "./dev-lines.js";
-    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false });
+    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false, lineColor: "236 85 40" });
     const $ = (id) => document.getElementById(id);
     const power = $("tb-power"), guides = $("tb-guides"), outlines = $("tb-outlines"),
           labels = $("tb-labels"), copy = $("tb-copy"), more = $("tb-more"),
@@ -444,6 +456,24 @@
     more.addEventListener("click", () => { menu.hidden = !menu.hidden; });
     labelseg.querySelectorAll("button").forEach((b) =>
       b.addEventListener("click", () => { ensureOn(); dl.cycleLabels(b.dataset.mode); sync(); }));
+
+    // live color + position mods
+    const triplet = (hex) => { const n = parseInt(hex.slice(1), 16); return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`; };
+    const cLine = $("c-line"), cPad = $("c-pad"), cDepth = $("c-depth"), cPos = $("c-pos");
+    cLine.addEventListener("input", () => { ensureOn(); dl.update({ lineColor: triplet(cLine.value) }); });
+    cPad.addEventListener("input", () => { ensureOn(); dl.update({ paddingColor: triplet(cPad.value) }); });
+    cDepth.addEventListener("input", () => { ensureOn(); dl.update({ depthColors: [...cDepth.querySelectorAll("input")].map((i) => triplet(i.value)) }); });
+    cPos.querySelectorAll("button").forEach((b) =>
+      b.addEventListener("click", () => {
+        cPos.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
+        const p = b.dataset.pos;
+        Object.assign(bar.style, { top: p[0] === "t" ? "16px" : "", bottom: p[0] === "b" ? "16px" : "", left: p[1] === "l" ? "16px" : "", right: p[1] === "r" ? "16px" : "" });
+        menu.style.top = p[0] === "t" ? "calc(100% + 7px)" : "auto";
+        menu.style.bottom = p[0] === "b" ? "calc(100% + 7px)" : "auto";
+        menu.style.left = p[1] === "l" ? "0" : "auto";
+        menu.style.right = p[1] === "r" ? "0" : "auto";
+      }));
+
     document.addEventListener("click", (e) => { if (!bar.contains(e.target)) menu.hidden = true; });
     window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G / L
     sync();

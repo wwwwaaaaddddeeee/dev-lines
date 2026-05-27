@@ -16,8 +16,8 @@ var DEFAULT_DEPTH_COLORS = [
   // teal-500
 ];
 var DEFAULTS = {
-  lineColor: "236 72 153",
-  // pink-500
+  lineColor: "236 85 40",
+  // #ec5528
   paddingColor: "6 182 212",
   // cyan-500
   measureColor: "245 158 11",
@@ -40,7 +40,7 @@ var isBrowser = typeof window !== "undefined" && typeof document !== "undefined"
 function createDevLines(options = {}) {
   if (!isBrowser) return noopController();
   const opts = { ...DEFAULTS, ...options };
-  const depthColors = options.depthColors ?? DEFAULT_DEPTH_COLORS;
+  let depthColors = options.depthColors ?? DEFAULT_DEPTH_COLORS;
   const labels = { ...DEFAULT_LABELS, ...options.labels };
   let enabled = false;
   let root = null;
@@ -363,6 +363,21 @@ function createDevLines(options = {}) {
     if (guidesLayer) guidesLayer.style.display = guidesOn ? "" : "none";
     drawLabels();
   }
+  function update(next) {
+    if (next.lineColor !== void 0) opts.lineColor = next.lineColor;
+    if (next.paddingColor !== void 0) opts.paddingColor = next.paddingColor;
+    if (next.measureColor !== void 0) opts.measureColor = next.measureColor;
+    if (next.depthColors !== void 0) depthColors = next.depthColors;
+    if (next.contentWidth !== void 0) opts.contentWidth = next.contentWidth;
+    if (next.paddingX !== void 0) opts.paddingX = next.paddingX;
+    if (root && guidesLayer) {
+      const fresh = buildGuides();
+      fresh.style.display = guidesOn ? "" : "none";
+      root.replaceChild(fresh, guidesLayer);
+      guidesLayer = fresh;
+    }
+    drawSections();
+  }
   function typingInField() {
     const t = document.activeElement;
     return !!t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
@@ -431,6 +446,7 @@ function createDevLines(options = {}) {
     cycleLabels,
     toggleOutlines,
     toggleGuides,
+    update,
     copy: copyHandle,
     getState: () => ({ enabled, outlines: outlinesOn, guides: guidesOn, labels: labels.mode }),
     refresh: drawSections,
@@ -455,6 +471,8 @@ function noopController() {
     toggleOutlines() {
     },
     toggleGuides() {
+    },
+    update() {
     },
     copy() {
     },
