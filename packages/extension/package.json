@@ -1,0 +1,19 @@
+{
+  "name": "@dev-lines/extension",
+  "version": "0.0.1",
+  "private": true,
+  "description": "dev-lines Chrome extension (MV3) — layout guides, outlines, labels & distances on any page.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "dependencies": {
+    "@dev-lines/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.287",
+    "esbuild": "^0.27.0"
+  }
+}

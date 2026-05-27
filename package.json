@@ -1,0 +1,19 @@
+{
+  "name": "dev-lines-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Layout debug overlay — center/width/padding guides and depth-colored section outlines for localhost.",
+  "scripts": {
+    "build": "pnpm -r --filter \"./packages/*\" build",
+    "dev:demo": "pnpm --filter demo dev"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@10.33.2",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

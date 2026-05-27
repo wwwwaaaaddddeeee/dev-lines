@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>dev-lines — demo</title>
+<style>
+  :root {
+    --blue: 59 130 246;   /* header */
+    --red: 239 68 68;     /* column */
+    --green: 34 197 94;   /* group */
+    --purple: 168 85 247;  /* hero */
+    --orange: 249 115 22;  /* row */
+    --teal: 20 184 166;    /* sub-group */
+    --pink: 236 72 153;    /* center + content edges */
+    --cyan: 6 182 212;     /* padding edges */
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    background: #fafafa;
+    color: #131718;
+    font: 16px/1.44 -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+  }
+
+  /* ---- the dev-lines overlay ---- */
+  .devlines { position: fixed; inset: 0; z-index: 50; pointer-events: none; }
+  .devlines > div { position: absolute; }
+  .v { top: 0; bottom: 0; width: 1px; }
+  .h { left: 0; right: 0; height: 1px; }
+  .center-v { left: 50%; transform: translateX(-50%); background: rgb(var(--pink) / 0.75); }
+  .center-h { top: 50%; transform: translateY(-50%); background: rgb(var(--pink) / 0.75); }
+  .edge-l  { left: 50%; transform: translateX(-13rem); background: rgb(var(--pink) / 0.75); }
+  .edge-r  { left: 50%; transform: translateX(13rem);  background: rgb(var(--pink) / 0.75); }
+  .pad-l   { left: 1.2rem;  background: rgb(var(--cyan) / 0.75); }
+  .pad-r   { right: 1.2rem; background: rgb(var(--cyan) / 0.75); }
+
+  /* ---- section rings (inset, no layout shift) ---- */
+  .ring { box-shadow: inset 0 0 0 1px rgb(var(--c) / 0.6); }
+
+  /* ---- placeholder content (neutral, no real copy) ---- */
+  .column { display: flex; flex-direction: column; align-items: stretch; gap: 3rem; width: 100%; max-width: 26rem; --c: var(--red); }
+  .group  { display: flex; flex-direction: column; gap: 1.5rem; --c: var(--green); }
+  .hero   { display: flex; align-items: center; justify-content: center; height: 9rem; --c: var(--purple); }
+  .hero-fill { width: 60%; height: 70%; border-radius: 8px;
+    background: linear-gradient(90deg, #4db8ff, #4de2c0, #9be84d, #ffd24d, #ff8a3d, #ff4d4d); opacity: 0.85; }
+  .bar { height: 0.7rem; border-radius: 3px; background: #e2e2e6; }
+  .bar.short { width: 55%; }
+  .bar.mid   { width: 80%; }
+  .row { display: flex; align-items: center; justify-content: space-between; --c: var(--orange); }
+  .subgroup { display: flex; align-items: center; gap: 0.6rem; --c: var(--teal); }
+  .dot { width: 15px; height: 15px; border-radius: 4px; background: #cfcfd4; }
+  .pill { font-size: 11px; color: #b5b5bb; border: 1px solid #d8d8dc; border-radius: 999px; padding: 3px 10px; }
+
+  .topbar { position: fixed; left: 50%; top: 2rem; transform: translateX(-50%);
+    width: calc(100% - 2.4rem); max-width: 26rem; display: flex; align-items: center; justify-content: center;
+    font-size: 10px; color: #3b82f6; --c: var(--blue); }
+  .topbar .tag { background: rgb(var(--blue) / 0.06); border-radius: 4px; padding: 1px 5px; }
+</style>
+</head>
+<body>
+  <!-- dev-lines overlay -->
+  <div class="devlines" aria-hidden="true">
+    <div class="v center-v"></div>
+    <div class="h center-h"></div>
+    <div class="v edge-l"></div>
+    <div class="v edge-r"></div>
+    <div class="v pad-l"></div>
+    <div class="v pad-r"></div>
+  </div>
+
+  <!-- top bar -->
+  <div class="topbar ring"><span class="tag">HEADER</span></div>
+
+  <!-- centered content column -->
+  <div class="column ring">
+    <div class="group ring">
+      <div class="hero ring"><div class="hero-fill"></div></div>
+      <div class="bar mid"></div>
+      <div class="bar short"></div>
+      <div class="bar mid"></div>
+    </div>
+    <div class="row ring">
+      <div class="subgroup ring">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <span class="pill">label</span>
+    </div>
+  </div>
+</body>
+</html>

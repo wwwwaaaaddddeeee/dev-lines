@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  :root { --ink:#0a0a0a; --muted:#6b7280; --faint:#9ca3af; --hair:#ececec; --pink:236 72 153; --card:#fafafa; }
+  * { box-sizing: border-box; }
+  body { margin:0; width:248px; font:13px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    color:var(--ink); background:#fff; padding:14px; }
+  .head { display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+  .logo { width:18px; height:18px; }
+  .name { font-weight:600; letter-spacing:-0.02em; }
+  .dot { margin-left:auto; width:8px; height:8px; border-radius:50%; background:#d4d4d8; }
+  .dot.on { background:rgb(var(--pink)); }
+  button.toggle { all:unset; cursor:pointer; display:block; width:100%; text-align:center; padding:9px;
+    border-radius:9px; font-weight:600; background:var(--ink); color:#fff; margin-bottom:12px; }
+  button.toggle.off { background:var(--card); color:var(--muted); border:1px solid var(--hair); }
+  .row { display:flex; align-items:center; justify-content:space-between; padding:7px 0; }
+  .row .lbl { color:var(--muted); }
+  .sw { all:unset; cursor:pointer; font:12px "ui-monospace",monospace; color:var(--faint);
+    border:1px solid var(--hair); border-radius:6px; padding:3px 9px; }
+  .sw.on { color:rgb(var(--pink)); border-color:rgb(var(--pink) / .4); background:rgb(var(--pink) / .08); }
+  .seg { display:inline-flex; gap:2px; background:var(--card); border:1px solid var(--hair); border-radius:7px; padding:2px; }
+  .seg button { all:unset; cursor:pointer; font:11px "ui-monospace",monospace; padding:3px 8px; border-radius:5px; color:var(--faint); }
+  .seg button.on { background:#fff; color:var(--ink); box-shadow:0 1px 2px rgb(0 0 0 /.08); }
+  .hint { margin-top:12px; padding-top:10px; border-top:1px solid var(--hair); color:var(--faint); font-size:11px; line-height:1.7; }
+  .hint b { color:var(--muted); font-weight:600; }
+  .disabled { color:var(--faint); text-align:center; padding:8px 0; }
+  fieldset { border:0; padding:0; margin:0; }
+  fieldset[disabled] { opacity:.45; pointer-events:none; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <svg class="logo" viewBox="0 0 32 32" fill="none">
+      <path d="M6 26 18 6M14 26 26 6" stroke="rgb(236 72 153)" stroke-width="3.4" stroke-linecap="round"/>
+      <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
+    </svg>
+    <span class="name">dev-lines</span>
+    <span class="dot" id="dot"></span>
+  </div>
+
+  <button class="toggle off" id="toggle">Enable</button>
+
+  <fieldset id="controls" disabled>
+    <div class="row"><span class="lbl">Outlines</span><button class="sw" id="outlines">on</button></div>
+    <div class="row"><span class="lbl">Guides</span><button class="sw" id="guides">on</button></div>
+    <div class="row"><span class="lbl">Labels</span>
+      <span class="seg" id="labels">
+        <button data-mode="off">off</button>
+        <button data-mode="hover">hover</button>
+        <button data-mode="all">all</button>
+      </span>
+    </div>
+  </fieldset>
+
+  <div class="hint" id="hint">
+    <b>⌘/Ctrl ⇧ L</b> toggle · <b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · hold <b>Alt</b> distances
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
