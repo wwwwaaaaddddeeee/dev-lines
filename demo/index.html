@@ -249,6 +249,12 @@
       transition-duration: .01ms !important;
     }
   }
+
+  /* mobile: lock the page so dev-line gestures on the boxes don't scroll the page */
+  @media (max-width: 640px) {
+    html, body { height: 100dvh; overflow: hidden; overscroll-behavior: none; }
+    .wrap { padding-bottom: 0; }
+  }
 </style>
 </head>
 <body>
