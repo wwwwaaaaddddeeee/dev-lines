@@ -252,8 +252,9 @@
 
   /* mobile: lock the page so dev-line gestures on the boxes don't scroll the page */
   @media (max-width: 640px) {
-    html, body { height: 100dvh; overflow: hidden; overscroll-behavior: none; }
-    .wrap { padding-bottom: 0; }
+    html, body { height: 100dvh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; }
+    .wrap { flex: 1; min-height: 0; padding-top: 28px; padding-bottom: 0; justify-content: flex-start; }
+    .depthdemo { margin-top: 28px; }
   }
 </style>
 </head>
