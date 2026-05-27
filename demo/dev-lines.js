@@ -4,24 +4,24 @@ var Z = 2147483600;
 var DEFAULT_DEPTH_COLORS = [
   "53 122 246",
   // #357af6 blue
-  "217 56 49",
-  // #d93831 red
+  "255 59 59",
+  // #ff3b3b red
   "43 212 107",
   // #2bd46b green
-  "116 60 233",
-  // #743ce9 violet
-  "236 85 40",
-  // #ec5528 orange
-  "20 200 200"
-  // #14c8c8 teal
+  "157 92 255",
+  // #9d5cff violet
+  "255 122 26",
+  // #ff7a1a orange
+  "0 224 192"
+  // #00e0c0 teal
 ];
 var DEFAULTS = {
   lineColor: "237 116 241",
   // #ed74f1
-  paddingColor: "6 182 212",
-  // cyan-500
-  measureColor: "245 158 11",
-  // amber-500
+  paddingColor: "24 207 255",
+  // #18cfff
+  measureColor: "255 159 10",
+  // #ff9f0a
   sections: true,
   shortcut: "mod+shift+l",
   labelKey: "l",
