@@ -38,13 +38,17 @@
     font-size: 15px;
     line-height: 1.5;
     letter-spacing: -0.01em;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
   code, kbd, .mono { font-family: "Geist Mono", ui-monospace, monospace; }
-  .wrap { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: 640px; width: 100%; margin: 0 auto; padding: 0 24px 144px; text-align: center;
+    flex: 1; display: flex; flex-direction: column; justify-content: center; }
   a { color: inherit; }
 
   /* floating toolbar, à la the real tool */
-  .toolbar { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 2147483601;
+  .toolbar { position: fixed; bottom: 130px; left: 50%; transform: translateX(-50%); z-index: 2147483601;
     display: flex; align-items: center; gap: 2px; background: #fff; border: 1px solid var(--hair);
     border-radius: 999px; padding: 5px; box-shadow: 0 6px 22px rgb(0 0 0 / .08); }
   .tb-btn { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 999px; position: relative;
@@ -76,15 +80,15 @@
   .tb-menu .keys { margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--hair); font: 11px/1.8 "Geist Mono", monospace; color: var(--faint); }
   .tb-menu .keys b { color: var(--muted); font-weight: 600; }
 
-  header.hero { padding: 96px 0 40px; }
-  .mark { display: flex; align-items: center; gap: 10px; }
+  header.hero { padding: 0; }
+  .mark { display: flex; align-items: center; justify-content: center; gap: 10px; }
   .logo { width: 26px; height: 26px; }
   .name { font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
   .ver { color: var(--faint); font-size: 13px; }
   .gh { color: var(--faint); display: inline-flex; margin-left: -3px; }
   .headline { font-size: 15px; line-height: 1.5; font-weight: 500; letter-spacing: -0.01em; margin: 22px 0 0; color: var(--muted); }
   .headline .dim { color: var(--faint); }
-  .sub { color: var(--muted); font-size: 16px; max-width: 30rem; }
+  .sub { color: var(--muted); font-size: 16px; max-width: 30rem; margin: 26px 0 0; }
 
   /* hero showcase — the overlay rendered on a mini layout */
   .showcase {
@@ -130,7 +134,7 @@
   .showcase .cap { animation: cap-in .3s var(--ease-out-cubic) .42s backwards; }
   @keyframes cap-in { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
 
-  .depthdemo { position: relative; display: flex; width: 100%; max-width: 360px; height: 240px; margin: 22px auto 0;
+  .depthdemo { position: relative; display: flex; width: 100%; max-width: 360px; height: 240px; margin: 48px auto 0;
     border: 1px solid var(--hair); border-radius: 14px; background: var(--card); }
   .depthdemo .d { position: relative; display: flex; flex: 1; padding: 8px; min-width: 0;
     box-shadow: inset 0 0 0 1px rgb(0 0 0 / .04); border-radius: 5px;
@@ -159,7 +163,7 @@
   .pal-min .pd { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
   .pal-min .pal-sep { width: 1px; height: 11px; background: var(--hair); margin: 0 6px; }
 
-  section { padding: 44px 0; border-top: 1px solid var(--hair); }
+  section { padding: 16px 0; }
   h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin: 0 0 22px; }
 
   .feat { display: flex; gap: 12px; padding: 9px 0; align-items: baseline; }
@@ -194,10 +198,10 @@
   kbd { font-family: "Geist Mono", monospace; font-size: 12px; background: var(--card); border: 1px solid var(--hair);
     border-bottom-width: 2px; border-radius: 6px; padding: 2px 7px; color: #1f2937; }
 
-  footer { padding: 26px 0 80px; margin-top: 8px; border-top: 1px solid var(--hair);
-    color: var(--faint); font-size: 13px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+  footer { padding: 14px 24px 18px;
+    color: var(--faint); font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 18px; }
   footer .left { display: flex; align-items: center; gap: 10px; }
-  footer .foot-logo { width: 17px; height: 17px; }
+  footer .foot-logo { width: 13px; height: 13px; }
   footer .lic a { color: var(--muted); text-decoration: none; }
   footer .lic a:hover { color: var(--ink); }
   footer .links { display: flex; align-items: center; gap: 15px; }
@@ -281,202 +285,34 @@
     <header class="hero">
       <div class="mark">
         <svg class="logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(251 7 12)" stroke-width="3.4" stroke-linecap="round"/>
-          <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(255 0 0)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M2 16h28" stroke="rgb(0 0 255)" stroke-width="3.4" stroke-linecap="round"/>
         </svg>
         <span class="name">dev-lines</span>
         <span class="ver">v0.0.0</span>
-        <a class="gh" href="#" title="GitHub">
+        <a class="gh" href="https://github.com/wwwwaaaaddddeeee/dev-lines" target="_blank" rel="noopener noreferrer" title="GitHub">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.3 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.2-1.3-5.2-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C18.3 4.3 19.3 4.6 19.3 4.6c.6 1.5.2 2.7.1 3 .8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5Z"/></svg>
         </a>
       </div>
 
       <h1 class="headline">See the lines. <span class="dim">Before you ship the bug.</span></h1>
-      <p class="sub">Center, width, and padding guides — plus depth-colored outlines and labels around every layout box. On localhost, in any framework, without touching your markup.</p>
-
-      <div class="showcase" data-devlines="ignore">
-        <div class="mini">
-          <div class="topbar ring" style="--c: var(--blue)"><span class="tag">HEADER</span></div>
-          <div class="col ring" style="--c: var(--red)">
-            <span class="cap" style="--c: var(--red)">Hero · &lt;section&gt; · flex</span>
-            <div class="deck ring" style="--c: var(--purple)">
-              <span class="cap" style="--c: var(--purple)">&lt;figure&gt; · 156×69</span>
-              <div></div>
-            </div>
-            <div class="bar m"></div>
-            <div class="bar s"></div>
-            <div class="bar m"></div>
-            <div class="row ring" style="--c: var(--orange)">
-              <div class="dots ring" style="--c: var(--teal)"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="pill">label</span>
-            </div>
-          </div>
-        </div>
-        <div class="ov">
-          <div class="cv"></div><div class="ch"></div><div class="pl"></div><div class="pr"></div>
-        </div>
-      </div>
     </header>
 
     <section>
-      <h2>Depth → color</h2>
-      <p class="lead">Outlines are colored by nesting depth. Flip the switch to paint these 12 nested boxes graphite → red — the full palette, max 12.</p>
       <div class="depthdemo" data-devlines-name="Depth demo"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"></div></div></div></div></div></div></div></div></div></div></div></div>
       <label class="dd-switch"><input type="checkbox" id="dd-toggle" /><span class="track"></span> Show all 12 depths</label>
-      <div class="pal-min" aria-label="palette">
-        <span class="pd" style="background:#1d1d1d" title="depth 1 · #1d1d1d"></span><span class="pd" style="background:#9ba4b7" title="depth 2 · #9ba4b7"></span><span class="pd" style="background:#eb83f6" title="depth 3 · #eb83f6"></span><span class="pd" style="background:#be31d0" title="depth 4 · #be31d0"></span><span class="pd" style="background:#1853ef" title="depth 5 · #1853ef"></span><span class="pd" style="background:#00a8ff" title="depth 6 · #00a8ff"></span><span class="pd" style="background:#ffb522" title="depth 7 · #ffb522"></span><span class="pd" style="background:#f16200" title="depth 8 · #f16200"></span><span class="pd" style="background:#16a67e" title="depth 9 · #16a67e"></span><span class="pd" style="background:#1dce69" title="depth 10 · #1dce69"></span><span class="pd" style="background:#ff8baa" title="depth 11 · #ff8baa"></span><span class="pd" style="background:#f21a32" title="depth 12 · #f21a32"></span>
-        <span class="pal-sep"></span>
-        <span class="pd" style="background:#fb070c" title="guides · #fb070c"></span><span class="pd" style="background:#18cfff" title="padding · #18cfff"></span><span class="pd" style="background:#ff9f0a" title="distances · #ff9f0a"></span>
-      </div>
     </section>
 
-    <section>
-      <h2>Features</h2>
-      <div class="feat"><span class="ic">⌗</span><div><b>Center cross</b> <span>— vertical + horizontal viewport center.</span></div></div>
-      <div class="feat"><span class="ic">│</span><div><b>Content & padding edges</b> <span>— guides at your container width and page padding.</span></div></div>
-      <div class="feat"><span class="ic">▢</span><div><b>Depth-colored outlines</b> <span>— every layout box, colored by nesting depth.</span></div></div>
-      <div class="feat"><span class="ic">⊞</span><div><b>Auto-detect</b> <span>— finds flex/grid containers; opt in or out with one data attribute.</span></div></div>
-      <div class="feat"><span class="ic">⌶</span><div><b>Labels</b> <span>— hover any box for tag · size · layout; name your own regions with <code>data-devlines-name</code>; px readouts on the guides.</span></div></div>
-      <div class="feat"><span class="ic">↔</span><div><b>Distances</b> <span>— hold <code>Alt</code> to measure the gaps from the hovered box to its container.</span></div></div>
-      <div class="feat"><span class="ic">⧉</span><div><b>For agents</b> <span>— every box gets a name (yours via <code>data-devlines-name</code>, or auto from id / aria-label / heading); press <code>C</code> to copy its handle + selector. Point your AI agent at a section by name.</span></div></div>
-      <div class="feat"><span class="ic">∅</span><div><b>Non-invasive</b> <span>— drawn as an overlay; never mutates your styles. Zero dependencies.</span></div></div>
-      <div class="feat"><span class="ic">⏻</span><div><b>Toggle & persist</b> <span>— one shortcut on/off, remembered across reloads.</span></div></div>
-    </section>
-
-
-    <section>
-      <h2>How to use</h2>
-      <div class="cards">
-        <div class="uicard">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l7.5 4.5"/></svg>
-          <h3>Chrome extension</h3>
-          <p>Inspect any page on the web — no install in the project.</p>
-          <a href="#">Add to Chrome →</a>
-        </div>
-        <div class="uicard">
-          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6"/></svg>
-          <h3>npm package</h3>
-          <p>Drop it into your app for guides tuned to your layout on localhost.</p>
-          <a href="#">Install package →</a>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Install</h2>
-      <p class="lead">Choose your setup.</p>
-      <div class="setup-tabs">
-        <button class="setup-tab active" data-tab="ext">Chrome extension</button>
-        <button class="setup-tab" data-tab="any">npm · any framework</button>
-        <button class="setup-tab" data-tab="react">npm · React</button>
-      </div>
-
-      <!-- Chrome extension -->
-      <div class="panel active" data-panel="ext">
-        <p class="muted" style="margin-top:0">Nothing to install in your project. Add the extension and toggle dev-lines on any page on the web with <kbd>⌘/Ctrl</kbd> <kbd>⇧</kbd> <kbd>L</kbd>.</p>
-        <a class="btn" href="#">Add to Chrome →</a>
-      </div>
-
-      <!-- any framework -->
-      <div class="panel" data-panel="any">
-        <div class="step"><span class="num">1</span><div class="step-b">
-          <h3>Install the package</h3>
-          <div class="codeblock"><button class="copy">Copy</button><pre><span class="c">$</span> npm install dev-lines  <span class="c"># or pnpm / bun / yarn</span></pre></div>
-        </div></div>
-        <div class="step"><span class="num">2</span><div class="step-b">
-          <h3>Add to your app</h3>
-          <div class="codeblock"><button class="copy">Copy</button><pre><span class="k">import</span> { createDevLines } <span class="k">from</span> <span class="s">"dev-lines"</span>;
-
-<span class="c">// call once, only in development</span>
-<span class="k">if</span> (<span class="k">import</span>.meta.env.DEV) {
-  createDevLines({ contentWidth: <span class="s">416</span>, paddingX: <span class="s">19</span> });
-}</pre></div>
-        </div></div>
-      </div>
-
-      <!-- react -->
-      <div class="panel" data-panel="react">
-        <div class="step"><span class="num">1</span><div class="step-b">
-          <h3>Install the package</h3>
-          <div class="codeblock"><button class="copy">Copy</button><pre><span class="c">$</span> npm install dev-lines  <span class="c"># or pnpm / bun / yarn</span></pre></div>
-        </div></div>
-        <div class="step"><span class="num">2</span><div class="step-b">
-          <h3>Add to your app</h3>
-          <div class="codeblock"><button class="copy">Copy</button><pre><span class="k">import</span> { DevLines } <span class="k">from</span> <span class="s">"dev-lines/react"</span>;
-
-<span class="c">// render at the root, dev only</span>
-{process.env.NODE_ENV === <span class="s">"development"</span> &amp;&amp; <span class="k">&lt;DevLines</span> contentWidth={<span class="s">416</span>} <span class="k">/&gt;</span>}</pre></div>
-        </div></div>
-      </div>
-    </section>
-
-    <section>
-      <h2>Props</h2>
-      <table>
-        <tr><td><span class="mono">contentWidth</span></td><td><span class="desc">px; draws content-width edge guides at center ± half. Omit to hide.</span></td></tr>
-        <tr><td><span class="mono">paddingX</span></td><td><span class="desc">px; draws padding edges this far in from each side.</span></td></tr>
-        <tr><td><span class="mono">depthColors</span></td><td><span class="desc">section-outline palette by nesting depth (wraps).</span></td></tr>
-        <tr><td><span class="mono">sections</span></td><td><span class="desc">outline layout containers. Default <span class="mono">true</span>.</span></td></tr>
-        <tr><td><span class="mono">labels</span></td><td><span class="desc"><span class="mono">{ mode, show, guides }</span> — mode <span class="mono">off · hover · all</span>; fields and guide readouts.</span></td></tr>
-        <tr><td><span class="mono">nameAttr</span></td><td><span class="desc">attribute read for a box's name. Default <span class="mono">data-devlines-name</span>.</span></td></tr>
-        <tr><td><span class="mono">autoName</span></td><td><span class="desc">derive a name from id / aria-label / component / heading when none is set.</span></td></tr>
-        <tr><td><span class="mono">shortcut</span></td><td><span class="desc">toggle combo. Default <span class="mono">mod+shift+l</span>.</span></td></tr>
-        <tr><td><span class="mono">persist</span></td><td><span class="desc">remember on/off across reloads.</span></td></tr>
-      </table>
-    </section>
-
-    <section>
-      <h2>Commands</h2>
-      <table>
-        <tr><td><kbd>⌘/Ctrl</kbd> <kbd>⇧</kbd> <kbd>L</kbd></td><td><span class="desc">Toggle dev-lines on/off</span></td></tr>
-        <tr><td><kbd>O</kbd></td><td><span class="desc">Toggle outlines</span></td></tr>
-        <tr><td><kbd>G</kbd></td><td><span class="desc">Toggle guides</span></td></tr>
-        <tr><td><kbd>L</kbd></td><td><span class="desc">Cycle labels — off → hover → all</span></td></tr>
-        <tr><td>hold <kbd>Alt</kbd></td><td><span class="desc">Distances from the hovered box to its container</span></td></tr>
-        <tr><td><kbd>C</kbd></td><td><span class="desc">Copy the hovered box's handle — name · selector · tag</span></td></tr>
-        <tr><td><kbd>Esc</kbd></td><td><span class="desc">Disable the overlay</span></td></tr>
-      </table>
-    </section>
-
-    <footer>
-      <div class="left">
-        <svg class="foot-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(251 7 12)" stroke-width="3.4" stroke-linecap="round"/>
-          <path d="M2 16h28" stroke="rgb(6 182 212)" stroke-width="3.4" stroke-linecap="round" opacity=".55"/>
-        </svg>
-        <span class="lic">© 2026 <a href="https://www.wa-de.org" target="_blank" rel="noopener noreferrer">wa-de</a> · <a href="#">MIT License</a> · <a href="changelog.html">Changelog</a></span>
-      </div>
-      <div class="links">
-        <a href="#" title="GitHub" aria-label="GitHub">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.3 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.2-1.3-5.2-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C18.3 4.3 19.3 4.6 19.3 4.6c.6 1.5.2 2.7.1 3 .8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5Z"/></svg>
-        </a>
-        <a href="#" title="npm" aria-label="npm">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M1.763 0C.786 0 0 .786 0 1.763v20.474C0 23.214.786 24 1.763 24h20.474c.977 0 1.763-.786 1.763-1.763V1.763C24 .786 23.214 0 22.237 0H1.763zM5.13 5.323l13.837.019-.009 13.836h-3.464l.01-10.382h-3.456L12.04 19.17H5.113L5.13 5.323z"/></svg>
-        </a>
-        <a href="#" title="Chrome Web Store" aria-label="Chrome Web Store">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C8.21 0 4.831 1.757 2.632 4.501l3.953 6.848A5.454 5.454 0 0 1 12 6.545h10.691A12 12 0 0 0 12 0zM1.931 5.47A11.943 11.943 0 0 0 0 12c0 6.012 4.42 10.99 10.189 11.864l3.953-6.847A5.45 5.45 0 0 1 1.931 5.47zm13.342 2.166a5.446 5.446 0 0 1 1.45 7.09l.002.001-5.344 9.257c.206.01.413.016.621.016 6.627 0 12-5.373 12-12 0-1.54-.29-3.011-.818-4.364zM12 16.364a4.364 4.364 0 1 1 0-8.728 4.364 4.364 0 0 1 0 8.728z"/></svg>
-        </a>
-      </div>
-    </footer>
   </div>
-  <script>
-    document.querySelectorAll(".setup-tab").forEach((t) => {
-      t.addEventListener("click", () => {
-        const id = t.dataset.tab;
-        document.querySelectorAll(".setup-tab").forEach((x) => x.classList.toggle("active", x === t));
-        document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.dataset.panel === id));
-      });
-    });
-    document.querySelectorAll(".codeblock .copy").forEach((b) => {
-      b.addEventListener("click", () => {
-        const code = b.parentElement.querySelector("pre").innerText.trim();
-        navigator.clipboard?.writeText(code);
-        const prev = b.textContent;
-        b.textContent = "Copied";
-        setTimeout(() => (b.textContent = prev), 1200);
-      });
-    });
-  </script>
+  <footer>
+    <div class="left">
+      <svg class="foot-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <path d="M6 26 18 6M14 26 26 6" stroke="rgb(255 0 0)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M2 16h28" stroke="rgb(0 0 255)" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      <span class="lic">© 2026 <a href="https://www.wa-de.org" target="_blank" rel="noopener noreferrer">wa-de</a> · <a href="#">MIT License</a> · <a href="changelog.html">Changelog</a></span>
+    </div>
+  </footer>
   <!-- live: run the real engine on this very page, driven by the toolbar -->
   <script type="module">
     import { createDevLines } from "./dev-lines.js";
@@ -541,6 +377,18 @@
     document.addEventListener("click", (e) => { if (!bar.contains(e.target)) menu.hidden = true; });
     window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G / L
     sync();
+
+    // park the toolbar in the middle of the open space between the box and the footer
+    const demoSection = document.querySelector("section"), footEl = document.querySelector("footer");
+    function placeBar() {
+      const mid = (demoSection.getBoundingClientRect().bottom + footEl.getBoundingClientRect().top) / 2;
+      bar.style.top = mid + "px";
+      bar.style.bottom = "auto";
+      bar.style.transform = "translate(-50%, -50%)";
+    }
+    placeBar();
+    window.addEventListener("resize", placeBar);
+    window.addEventListener("load", placeBar);
   </script>
 </body>
 </html>
