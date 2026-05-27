@@ -67,19 +67,20 @@ export interface DevLinesController {
 const STORAGE_KEY = "dev-lines:enabled";
 const Z = 2147483600;
 
+// Max 12 colors — depth clamps to the last one beyond this.
 const DEFAULT_DEPTH_COLORS = [
-  "45 45 50", // #2d2d32 graphite
-  "156 161 168", // #9ca1a8 gray
-  "206 125 220", // #ce7ddc lilac
-  "159 63 203", // #9f3fcb purple
-  "61 90 224", // #3d5ae0 blue
-  "90 160 224", // #5aa0e0 sky
-  "230 167 60", // #e6a73c amber
-  "203 106 32", // #cb6a20 burnt orange
-  "46 140 108", // #2e8c6c teal green
-  "91 179 105", // #5bb369 green
-  "226 117 117", // #e27575 coral
-  "201 60 46", // #c93c2e red
+  "29 29 29", // #1d1d1d graphite
+  "157 164 181", // #9da4b5 gray
+  "221 136 240", // #dd88f0 lilac
+  "175 61 201", // #af3dc9 purple
+  "42 82 230", // #2a52e6 blue
+  "75 165 248", // #4ba5f8 sky
+  "240 174 73", // #f0ae49 amber
+  "224 107 43", // #e06b2b orange
+  "63 142 107", // #3f8e6b teal-green
+  "83 173 93", // #53ad5d green
+  "238 121 112", // #ee7970 coral
+  "222 56 60", // #de383c red
 ];
 
 const DEFAULTS = {
@@ -131,6 +132,8 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
   let altDown = false;
 
   const rgba = (t: string, a: number) => `rgb(${t} / ${a})`;
+  // clamp to the last color beyond the palette length (max-N colors, no cycling)
+  const colorForDepth = (d: number) => depthColors[Math.min(d, depthColors.length - 1)];
 
   function line(css: Partial<CSSStyleDeclaration>): HTMLDivElement {
     const el = document.createElement("div");
@@ -209,7 +212,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
         const rect = el.getBoundingClientRect();
         if (rect.width === 0 || rect.height === 0) continue;
         boxes.push({ el, depth, rect });
-        const color = depthColors[depth % depthColors.length];
+        const color = colorForDepth(depth);
         const box = document.createElement("div");
         Object.assign(box.style, {
           position: "absolute",
@@ -321,9 +324,9 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
     }
     if (!outlinesOn) return;
     if (labels.mode === "all") {
-      for (const b of boxes) labelsLayer.appendChild(chip(labelText(b.el, b.depth, b.rect), depthColors[b.depth % depthColors.length], b.rect.left, b.rect.top));
+      for (const b of boxes) labelsLayer.appendChild(chip(labelText(b.el, b.depth, b.rect), colorForDepth(b.depth), b.rect.left, b.rect.top));
     } else if (labels.mode === "hover" && hoverBox) {
-      labelsLayer.appendChild(chip(labelText(hoverBox.el, hoverBox.depth, hoverBox.rect), depthColors[hoverBox.depth % depthColors.length], hoverBox.rect.left, hoverBox.rect.top));
+      labelsLayer.appendChild(chip(labelText(hoverBox.el, hoverBox.depth, hoverBox.rect), colorForDepth(hoverBox.depth), hoverBox.rect.left, hoverBox.rect.top));
     }
   }
 
