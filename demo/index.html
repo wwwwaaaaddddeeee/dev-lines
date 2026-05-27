@@ -75,8 +75,8 @@
   .logo { width: 26px; height: 26px; }
   .name { font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
   .ver { color: var(--faint); font-size: 13px; }
-  .gh { margin-left: auto; color: var(--faint); }
-  .headline { font-size: 40px; line-height: 1.05; font-weight: 600; letter-spacing: -0.03em; margin: 28px 0 14px; }
+  .gh { color: var(--faint); display: inline-flex; margin-left: -3px; }
+  .headline { font-size: 15px; line-height: 1.5; font-weight: 500; letter-spacing: -0.01em; margin: 22px 0 0; color: var(--muted); }
   .headline .dim { color: var(--faint); }
   .sub { color: var(--muted); font-size: 16px; max-width: 30rem; }
 
@@ -110,10 +110,22 @@
   .cap { position: absolute; left: 0; top: 0; font: 500 9px/1.4 "Geist Mono", monospace;
     color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; background: rgb(var(--c)/.92); }
 
-  .depthdemo { display: flex; width: 100%; max-width: 360px; height: 240px; margin: 22px auto 0;
+  .depthdemo { position: relative; display: flex; width: 100%; max-width: 360px; height: 240px; margin: 22px auto 0;
     border: 1px solid var(--hair); border-radius: 14px; background: var(--card); }
-  .depthdemo .d { display: flex; flex: 1; padding: 8px; min-width: 0;
+  .depthdemo .d { position: relative; display: flex; flex: 1; padding: 8px; min-width: 0;
     box-shadow: inset 0 0 0 1px rgb(0 0 0 / .04); border-radius: 5px; }
+  .dd-label { position: absolute; top: 0; left: 0; font: 500 9px/1.4 "Geist Mono", monospace;
+    color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
+  .dd-switch { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 18px; font-size: 13px; color: var(--muted); cursor: pointer; user-select: none; }
+  .dd-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .dd-switch .track { position: relative; width: 38px; height: 22px; border-radius: 999px; background: var(--hair); transition: background .18s; flex: none; }
+  .dd-switch .track::after { content: ""; position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgb(0 0 0 / .25); transition: transform .18s; }
+  .dd-switch input:checked + .track { background: rgb(var(--pink)); }
+  .dd-switch input:checked + .track::after { transform: translateX(16px); }
+  .pal-min { display: flex; justify-content: center; align-items: center; gap: 5px; margin-top: 22px; opacity: .7; transition: opacity .18s; }
+  .pal-min:hover { opacity: 1; }
+  .pal-min .pd { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
+  .pal-min .pal-sep { width: 1px; height: 11px; background: var(--hair); margin: 0 6px; }
 
   section { padding: 44px 0; border-top: 1px solid var(--hair); }
   h2 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--faint); margin: 0 0 22px; }
@@ -221,9 +233,6 @@
       <div class="tb-row"><span>Depth palette</span><span class="tb-sw" id="c-depth">
         <input type="color" value="#1d1d1d" /><input type="color" value="#9ba4b7" /><input type="color" value="#eb83f6" /><input type="color" value="#be31d0" /><input type="color" value="#1853ef" /><input type="color" value="#00a8ff" /><input type="color" value="#ffb522" /><input type="color" value="#f16200" /><input type="color" value="#16a67e" /><input type="color" value="#1dce69" /><input type="color" value="#ff8baa" /><input type="color" value="#f21a32" />
       </span></div>
-      <div class="tb-row"><span>Position</span>
-        <span class="tb-seg" id="c-pos"><button data-pos="tl">TL</button><button data-pos="tr">TR</button><button data-pos="bl">BL</button><button data-pos="br">BR</button></span>
-      </div>
       <div class="keys"><b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · <b>C</b> copy · <b>Alt</b> dist · <b>Esc</b> off</div>
     </div>
   </div>
@@ -238,11 +247,11 @@
         <span class="name">dev-lines</span>
         <span class="ver">v0.0.0</span>
         <a class="gh" href="#" title="GitHub">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.3 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.2-1.3-5.2-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C18.3 4.3 19.3 4.6 19.3 4.6c.6 1.5.2 2.7.1 3 .8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5Z"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.6.5.5 5.6.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.3 1 .1-.7.4-1.3.7-1.5-2.6-.3-5.2-1.3-5.2-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C18.3 4.3 19.3 4.6 19.3 4.6c.6 1.5.2 2.7.1 3 .8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.6 18.4.5 12 .5Z"/></svg>
         </a>
       </div>
 
-      <h1 class="headline">See the lines.<br /><span class="dim">Before you ship the bug.</span></h1>
+      <h1 class="headline">See the lines. <span class="dim">Before you ship the bug.</span></h1>
       <p class="sub">Center, width, and padding guides — plus depth-colored outlines and labels around every layout box. On localhost, in any framework, without touching your markup.</p>
 
       <div class="showcase" data-devlines="ignore">
@@ -271,8 +280,14 @@
 
     <section>
       <h2>Depth → color</h2>
-      <p class="lead">Outlines are colored by nesting depth. Toggle the overlay (the ⏻ in the toolbar) to paint these 12 nested boxes graphite → red — the full palette, max 12.</p>
+      <p class="lead">Outlines are colored by nesting depth. Flip the switch to paint these 12 nested boxes graphite → red — the full palette, max 12.</p>
       <div class="depthdemo" data-devlines-name="Depth demo"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"></div></div></div></div></div></div></div></div></div></div></div></div>
+      <label class="dd-switch"><input type="checkbox" id="dd-toggle" /><span class="track"></span> Show all 12 depths</label>
+      <div class="pal-min" aria-label="palette">
+        <span class="pd" style="background:#1d1d1d" title="depth 1 · #1d1d1d"></span><span class="pd" style="background:#9ba4b7" title="depth 2 · #9ba4b7"></span><span class="pd" style="background:#eb83f6" title="depth 3 · #eb83f6"></span><span class="pd" style="background:#be31d0" title="depth 4 · #be31d0"></span><span class="pd" style="background:#1853ef" title="depth 5 · #1853ef"></span><span class="pd" style="background:#00a8ff" title="depth 6 · #00a8ff"></span><span class="pd" style="background:#ffb522" title="depth 7 · #ffb522"></span><span class="pd" style="background:#f16200" title="depth 8 · #f16200"></span><span class="pd" style="background:#16a67e" title="depth 9 · #16a67e"></span><span class="pd" style="background:#1dce69" title="depth 10 · #1dce69"></span><span class="pd" style="background:#ff8baa" title="depth 11 · #ff8baa"></span><span class="pd" style="background:#f21a32" title="depth 12 · #f21a32"></span>
+        <span class="pal-sep"></span>
+        <span class="pd" style="background:#fb070c" title="guides · #fb070c"></span><span class="pd" style="background:#18cfff" title="padding · #18cfff"></span><span class="pd" style="background:#ff9f0a" title="distances · #ff9f0a"></span>
+      </div>
     </section>
 
     <section>
@@ -288,29 +303,6 @@
       <div class="feat"><span class="ic">⏻</span><div><b>Toggle & persist</b> <span>— one shortcut on/off, remembered across reloads.</span></div></div>
     </section>
 
-    <section>
-      <h2>Palette</h2>
-      <div class="palette">
-        <div class="sub-h">Guides</div>
-        <div class="sw"><span class="chip" style="background:#fb070c"></span><span class="lbl">Center &amp; width</span><span class="hex">#fb070c</span></div>
-        <div class="sw"><span class="chip" style="background:#18cfff"></span><span class="lbl">Padding</span><span class="hex">#18cfff</span></div>
-        <div class="sw"><span class="chip" style="background:#ff9f0a"></span><span class="lbl">Distances (Alt)</span><span class="hex">#ff9f0a</span></div>
-
-        <div class="sub-h">Section outlines (by depth, wraps after 12)</div>
-        <div class="sw"><span class="chip" style="background:#1d1d1d"></span><span class="lbl">Depth 1</span><span class="hex">#1d1d1d</span></div>
-        <div class="sw"><span class="chip" style="background:#9ba4b7"></span><span class="lbl">Depth 2</span><span class="hex">#9ba4b7</span></div>
-        <div class="sw"><span class="chip" style="background:#eb83f6"></span><span class="lbl">Depth 3</span><span class="hex">#eb83f6</span></div>
-        <div class="sw"><span class="chip" style="background:#be31d0"></span><span class="lbl">Depth 4</span><span class="hex">#be31d0</span></div>
-        <div class="sw"><span class="chip" style="background:#1853ef"></span><span class="lbl">Depth 5</span><span class="hex">#1853ef</span></div>
-        <div class="sw"><span class="chip" style="background:#00a8ff"></span><span class="lbl">Depth 6</span><span class="hex">#00a8ff</span></div>
-        <div class="sw"><span class="chip" style="background:#ffb522"></span><span class="lbl">Depth 7</span><span class="hex">#ffb522</span></div>
-        <div class="sw"><span class="chip" style="background:#f16200"></span><span class="lbl">Depth 8</span><span class="hex">#f16200</span></div>
-        <div class="sw"><span class="chip" style="background:#16a67e"></span><span class="lbl">Depth 9</span><span class="hex">#16a67e</span></div>
-        <div class="sw"><span class="chip" style="background:#1dce69"></span><span class="lbl">Depth 10</span><span class="hex">#1dce69</span></div>
-        <div class="sw"><span class="chip" style="background:#ff8baa"></span><span class="lbl">Depth 11</span><span class="hex">#ff8baa</span></div>
-        <div class="sw"><span class="chip" style="background:#f21a32"></span><span class="lbl">Depth 12</span><span class="hex">#f21a32</span></div>
-      </div>
-    </section>
 
     <section>
       <h2>How to use</h2>
@@ -477,20 +469,32 @@
 
     // live color + position mods
     const triplet = (hex) => { const n = parseInt(hex.slice(1), 16); return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`; };
-    const cLine = $("c-line"), cPad = $("c-pad"), cDepth = $("c-depth"), cPos = $("c-pos");
+    const cLine = $("c-line"), cPad = $("c-pad"), cDepth = $("c-depth");
     cLine.addEventListener("input", () => { ensureOn(); dl.update({ lineColor: triplet(cLine.value) }); });
     cPad.addEventListener("input", () => { ensureOn(); dl.update({ paddingColor: triplet(cPad.value) }); });
     cDepth.addEventListener("input", () => { ensureOn(); dl.update({ depthColors: [...cDepth.querySelectorAll("input")].map((i) => triplet(i.value)) }); });
-    cPos.querySelectorAll("button").forEach((b) =>
-      b.addEventListener("click", () => {
-        cPos.querySelectorAll("button").forEach((x) => x.classList.toggle("on", x === b));
-        const p = b.dataset.pos;
-        Object.assign(bar.style, { top: p[0] === "t" ? "16px" : "", bottom: p[0] === "b" ? "16px" : "", left: p[1] === "l" ? "16px" : "", right: p[1] === "r" ? "16px" : "" });
-        menu.style.top = p[0] === "t" ? "calc(100% + 7px)" : "auto";
-        menu.style.bottom = p[0] === "b" ? "calc(100% + 7px)" : "auto";
-        menu.style.left = p[1] === "l" ? "0" : "auto";
-        menu.style.right = p[1] === "r" ? "0" : "auto";
-      }));
+
+    // depth → color demo: paint the nested chain its depth colors on toggle
+    const DEPTH = ["29 29 29","155 164 183","235 131 246","190 49 208","24 83 239","0 168 255","255 181 34","241 98 0","22 166 126","29 206 105","255 139 170","242 26 50"];
+    const ddToggle = $("dd-toggle"), depthdemo = document.querySelector(".depthdemo");
+    if (ddToggle && depthdemo) {
+      const chain = [depthdemo];
+      let cur = depthdemo.querySelector(":scope > .d");
+      while (cur) { chain.push(cur); cur = cur.querySelector(":scope > .d"); }
+      ddToggle.addEventListener("change", () => {
+        const on = ddToggle.checked;
+        chain.forEach((node, i) => {
+          const c = DEPTH[Math.min(i, DEPTH.length - 1)];
+          node.style.boxShadow = on ? `inset 0 0 0 1px rgb(${c} / .6)` : "";
+          let lbl = node.querySelector(":scope > .dd-label");
+          if (on) {
+            if (!lbl) { lbl = document.createElement("span"); lbl.className = "dd-label"; node.prepend(lbl); }
+            lbl.textContent = `<div> · ${node.offsetWidth}×${node.offsetHeight} · flex`;
+            lbl.style.background = `rgb(${c} / .92)`;
+          } else if (lbl) { lbl.remove(); }
+        });
+      });
+    }
 
     document.addEventListener("click", (e) => { if (!bar.contains(e.target)) menu.hidden = true; });
     window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G / L
