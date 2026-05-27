@@ -153,15 +153,25 @@
     transition: box-shadow .15s var(--ease-out-cubic), background-color .15s var(--ease-out-cubic); }
   /* coloured rings when "show all 12 depths" is on (JS sets --dc per box) */
   .depthdemo.on, .depthdemo.on .d { box-shadow: inset 0 0 0 1px rgb(var(--dc) / .6); }
-  /* hover-to-pop: only the deepest box under the cursor lights up and lifts above the rest */
-  .depthdemo .d:hover:not(:has(.d:hover)) {
+  /* pop the deepest box under the pointer/finger: colour wash + ring + lift.
+     .pop is driven by touch (JS) so a finger can glide across the boxes;
+     :hover handles mouse devices (gated so it never sticks on touch). */
+  .depthdemo { touch-action: none; }
+  .depthdemo .d.pop {
     background-color: rgb(var(--dc, 0 0 0) / .16);
     box-shadow: inset 0 0 0 1.5px rgb(var(--dc, 0 0 0)), 0 6px 18px rgb(var(--dc, 0 0 0) / .3);
     z-index: 3; }
-  /* pull the hovered box's name forward, above the nested boxes drawn over it */
   .dd-label { z-index: 1; transition: transform .15s var(--ease-out-cubic), box-shadow .15s var(--ease-out-cubic); }
-  .depthdemo .d:hover:not(:has(.d:hover)) > .dd-label {
+  .depthdemo .d.pop > .dd-label {
     z-index: 6; transform: translateY(-2px); box-shadow: 0 3px 10px rgb(var(--dc, 0 0 0) / .45); }
+  @media (hover: hover) and (pointer: fine) {
+    .depthdemo .d:hover:not(:has(.d:hover)) {
+      background-color: rgb(var(--dc, 0 0 0) / .16);
+      box-shadow: inset 0 0 0 1.5px rgb(var(--dc, 0 0 0)), 0 6px 18px rgb(var(--dc, 0 0 0) / .3);
+      z-index: 3; }
+    .depthdemo .d:hover:not(:has(.d:hover)) > .dd-label {
+      z-index: 6; transform: translateY(-2px); box-shadow: 0 3px 10px rgb(var(--dc, 0 0 0) / .45); }
+  }
   .dd-label { position: absolute; top: 0; left: 0; font: 500 9px/1.4 "Geist Mono", monospace;
     color: #fff; padding: 1px 5px; border-radius: 4px; white-space: nowrap; pointer-events: none; }
   .dd-switch { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font-size: 13px; color: var(--muted); cursor: pointer; user-select: none; }
@@ -250,9 +260,12 @@
     }
   }
 
-  /* mobile: lock the page so dev-line gestures on the boxes don't scroll the page */
+  /* mobile: fit everything in one screen (no content scroll), but leave the
+     page's natural overscroll intact so pull-to-refresh still works. The box
+     component captures its own touches via touch-action: none, so playing with
+     it never scrolls or refreshes. */
   @media (max-width: 640px) {
-    html, body { height: 100dvh; min-height: 100dvh; overflow: hidden; overscroll-behavior: none; }
+    html, body { min-height: 100dvh; }
     .wrap { flex: 1; min-height: 0; padding-top: 28px; padding-bottom: 0; justify-content: flex-start; }
     .depthdemo { margin-top: 28px; }
   }
@@ -391,6 +404,20 @@
           } else if (lbl) { lbl.remove(); }
         });
       });
+
+      // touch glide: tracks the finger across the nested boxes and pops the
+      // deepest one under it (touch has no continuous :hover like a mouse).
+      const cells = chain.filter((n) => n.classList.contains("d"));
+      const popAt = (x, y) => {
+        const hit = document.elementFromPoint(x, y), d = hit && hit.closest(".d");
+        cells.forEach((n) => n.classList.toggle("pop", n === d));
+      };
+      const clearPop = () => cells.forEach((n) => n.classList.remove("pop"));
+      const onTouch = (e) => { const t = e.touches[0]; if (t) popAt(t.clientX, t.clientY); };
+      depthdemo.addEventListener("touchstart", onTouch, { passive: true });
+      depthdemo.addEventListener("touchmove", onTouch, { passive: true });
+      depthdemo.addEventListener("touchend", clearPop);
+      depthdemo.addEventListener("touchcancel", clearPop);
     }
 
     document.addEventListener("click", (e) => { if (!bar.contains(e.target)) menu.hidden = true; });
