@@ -54,6 +54,7 @@ function createDevLines(options = {}) {
   let boxes = [];
   let pointer = null;
   let hoverBox = null;
+  let lastHoverBox = null;
   let outlinesOn = opts.sections;
   let guidesOn = true;
   let altDown = false;
@@ -276,11 +277,12 @@ function createDevLines(options = {}) {
     setTimeout(() => el.remove(), 900);
   }
   function copyHandle() {
-    if (!hoverBox) return;
-    const el = hoverBox.el;
+    const target = hoverBox ?? lastHoverBox;
+    if (!target) return;
+    const el = target.el;
     const name = nameOf(el);
     const text = `${name ? `"${name}" \u2014 ` : ""}${selectorFor(el)} (<${el.tagName.toLowerCase()}>)`;
-    navigator.clipboard?.writeText(text).then(() => flashCopied(hoverBox.rect)).catch(() => {
+    navigator.clipboard?.writeText(text).then(() => flashCopied(target.rect)).catch(() => {
     });
   }
   function schedule() {
@@ -294,6 +296,7 @@ function createDevLines(options = {}) {
   function onPointerMove(e) {
     pointer = { x: e.clientX, y: e.clientY };
     hoverBox = boxAt(e.clientX, e.clientY);
+    if (hoverBox) lastHoverBox = hoverBox;
     drawLabels();
     drawMeasure();
   }
@@ -334,7 +337,7 @@ function createDevLines(options = {}) {
     ro?.disconnect();
     mo?.disconnect();
     ro = mo = null;
-    pointer = hoverBox = null;
+    pointer = hoverBox = lastHoverBox = null;
     root?.remove();
     root = sectionsLayer = guidesLayer = labelsLayer = measureLayer = null;
     boxes = [];
@@ -428,6 +431,7 @@ function createDevLines(options = {}) {
     cycleLabels,
     toggleOutlines,
     toggleGuides,
+    copy: copyHandle,
     getState: () => ({ enabled, outlines: outlinesOn, guides: guidesOn, labels: labels.mode }),
     refresh: drawSections,
     destroy() {
@@ -451,6 +455,8 @@ function noopController() {
     toggleOutlines() {
     },
     toggleGuides() {
+    },
+    copy() {
     },
     getState: () => ({ enabled: false, outlines: false, guides: false, labels: "off" }),
     refresh() {

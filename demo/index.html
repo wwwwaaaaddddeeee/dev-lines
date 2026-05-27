@@ -40,17 +40,29 @@
   a { color: inherit; }
 
   /* floating toolbar, à la the real tool */
-  .toolbar {
-    position: fixed; top: 16px; left: 16px; z-index: 60;
-    display: flex; align-items: center; gap: 2px;
-    background: #fff; border: 1px solid var(--hair); border-radius: 10px;
-    padding: 5px; box-shadow: 0 4px 16px rgb(0 0 0 / 0.06);
-  }
-  .toolbar button {
-    all: unset; cursor: pointer; width: 30px; height: 28px; border-radius: 6px;
-    display: grid; place-items: center; color: var(--faint);
-  }
-  .toolbar button.active { background: rgb(var(--pink) / 0.1); color: rgb(var(--pink)); }
+  .toolbar { position: fixed; top: 16px; left: 16px; z-index: 2147483601;
+    display: flex; align-items: center; gap: 2px; background: #fff; border: 1px solid var(--hair);
+    border-radius: 11px; padding: 5px; box-shadow: 0 6px 22px rgb(0 0 0 / .08); }
+  .tb-btn { all: unset; cursor: pointer; width: 30px; height: 28px; border-radius: 7px; position: relative;
+    display: grid; place-items: center; color: var(--faint); transition: background .12s, color .12s; }
+  .tb-btn:hover { background: var(--card); color: var(--muted); }
+  .tb-btn.active { background: rgb(var(--pink) / .1); color: rgb(var(--pink)); }
+  .tb-btn.power.active { background: rgb(var(--pink)); color: #fff; }
+  .tb-btn.dim { opacity: .35; pointer-events: none; }
+  .tb-btn .mode-dot { position: absolute; bottom: 3px; right: 4px; width: 4px; height: 4px; border-radius: 50%; background: rgb(var(--pink)); display: none; }
+  .tb-btn.active .mode-dot { display: block; }
+  .tb-sep { width: 1px; height: 18px; background: var(--hair); margin: 0 3px; }
+  .tb-menu { position: absolute; top: calc(100% + 7px); left: 0; width: 222px; background: #fff;
+    border: 1px solid var(--hair); border-radius: 12px; box-shadow: 0 10px 28px rgb(0 0 0 / .12); padding: 12px; }
+  .tb-menu[hidden] { display: none; }
+  .tb-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; font-size: 12px; color: var(--muted); }
+  .tb-seg { display: inline-flex; gap: 2px; background: var(--card); border: 1px solid var(--hair); border-radius: 7px; padding: 2px; }
+  .tb-seg button { all: unset; cursor: pointer; font: 11px "Geist Mono", monospace; padding: 2px 7px; border-radius: 5px; color: var(--faint); }
+  .tb-seg button.on { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+  .tb-sw { display: flex; gap: 5px; }
+  .tb-sw .chip { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .08); }
+  .tb-menu .keys { margin-top: 8px; padding-top: 9px; border-top: 1px solid var(--hair); font: 11px/1.8 "Geist Mono", monospace; color: var(--faint); }
+  .tb-menu .keys b { color: var(--muted); font-weight: 600; }
 
   header.hero { padding: 96px 0 40px; }
   .mark { display: flex; align-items: center; gap: 10px; }
@@ -162,13 +174,40 @@
 </head>
 <body>
   <!-- floating toolbar -->
-  <div class="toolbar">
-    <button id="dl-toggle" title="Toggle dev-lines (⌘/Ctrl+Shift+L)">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
+  <div class="toolbar" id="dl-bar" data-devlines="ignore">
+    <button class="tb-btn power" id="tb-power" title="Toggle dev-lines (⌘/Ctrl+Shift+L)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 2v6"/><path d="M4.4 4.4a5 5 0 1 0 7.2 0"/></svg>
     </button>
-    <button id="dl-outlines" title="Toggle outlines (O)">
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/></svg>
+    <span class="tb-sep"></span>
+    <button class="tb-btn" id="tb-guides" title="Guides (G)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 1v14M1 8h14"/></svg>
     </button>
+    <button class="tb-btn" id="tb-outlines" title="Outlines (O)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="2"/></svg>
+    </button>
+    <button class="tb-btn" id="tb-labels" title="Labels (L)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.6 6.4 7 2h6.5v6.5L9 13z"/><circle cx="10.4" cy="5.6" r="1" fill="currentColor" stroke="none"/></svg>
+      <span class="mode-dot"></span>
+    </button>
+    <button class="tb-btn" id="tb-copy" title="Copy handle (C)">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/><path d="M3 10.5V3.5a1 1 0 0 1 1-1h7"/></svg>
+    </button>
+    <span class="tb-sep"></span>
+    <button class="tb-btn" id="tb-more" title="Settings">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l4 4 4-4"/></svg>
+    </button>
+    <div class="tb-menu" id="tb-menu" hidden>
+      <div class="tb-row"><span>Labels</span>
+        <span class="tb-seg" id="tb-labelseg">
+          <button data-mode="off">off</button><button data-mode="hover">hover</button><button data-mode="all">all</button>
+        </span>
+      </div>
+      <div class="tb-row"><span>Distances</span><span style="color:var(--faint)">hold Alt</span></div>
+      <div class="tb-row"><span>Guide colors</span><span class="tb-sw"><span class="chip" style="background:#ec4899"></span><span class="chip" style="background:#06b6d4"></span></span></div>
+      <div class="tb-row"><span>Depth palette</span><span class="tb-sw"><span class="chip" style="background:#3b82f6"></span><span class="chip" style="background:#ef4444"></span><span class="chip" style="background:#22c55e"></span><span class="chip" style="background:#a855f7"></span></span></div>
+      <div class="tb-row"><span>Position</span><span style="color:var(--faint)">top-left</span></div>
+      <div class="keys"><b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · <b>C</b> copy · <b>Alt</b> dist · <b>Esc</b> off</div>
+    </div>
   </div>
 
   <div class="wrap">
@@ -376,20 +415,37 @@
       });
     });
   </script>
-  <!-- live: run the real engine on this very page -->
+  <!-- live: run the real engine on this very page, driven by the toolbar -->
   <script type="module">
     import { createDevLines } from "./dev-lines.js";
     const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false });
-    const toggleBtn = document.getElementById("dl-toggle");
-    const outlinesBtn = document.getElementById("dl-outlines");
+    const $ = (id) => document.getElementById(id);
+    const power = $("tb-power"), guides = $("tb-guides"), outlines = $("tb-outlines"),
+          labels = $("tb-labels"), copy = $("tb-copy"), more = $("tb-more"),
+          menu = $("tb-menu"), bar = $("dl-bar"), labelseg = $("tb-labelseg");
+    const ensureOn = () => { if (!dl.isEnabled()) dl.enable(); };
+
     function sync() {
       const s = dl.getState();
-      toggleBtn.classList.toggle("active", s.enabled);
-      outlinesBtn.classList.toggle("active", s.enabled && s.outlines);
+      power.classList.toggle("active", s.enabled);
+      guides.classList.toggle("active", s.enabled && s.guides);
+      outlines.classList.toggle("active", s.enabled && s.outlines);
+      labels.classList.toggle("active", s.enabled && s.labels !== "off");
+      labels.title = "Labels: " + s.labels + " (L)";
+      [guides, outlines, labels, copy].forEach((b) => b.classList.toggle("dim", !s.enabled));
+      labelseg.querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.mode === s.labels));
     }
-    toggleBtn.addEventListener("click", () => { dl.toggle(); sync(); });
-    outlinesBtn.addEventListener("click", () => { if (!dl.isEnabled()) dl.enable(); dl.toggleOutlines(); sync(); });
-    window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G
+
+    power.addEventListener("click", () => { dl.toggle(); sync(); });
+    guides.addEventListener("click", () => { ensureOn(); dl.toggleGuides(); sync(); });
+    outlines.addEventListener("click", () => { ensureOn(); dl.toggleOutlines(); sync(); });
+    labels.addEventListener("click", () => { ensureOn(); dl.cycleLabels(); sync(); });
+    copy.addEventListener("click", () => { ensureOn(); dl.copy(); });
+    more.addEventListener("click", () => { menu.hidden = !menu.hidden; });
+    labelseg.querySelectorAll("button").forEach((b) =>
+      b.addEventListener("click", () => { ensureOn(); dl.cycleLabels(b.dataset.mode); sync(); }));
+    document.addEventListener("click", (e) => { if (!bar.contains(e.target)) menu.hidden = true; });
+    window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G / L
     sync();
   </script>
 </body>

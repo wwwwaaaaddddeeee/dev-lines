@@ -55,6 +55,8 @@ export interface DevLinesController {
   cycleLabels(mode?: LabelMode): void;
   toggleOutlines(on?: boolean): void;
   toggleGuides(on?: boolean): void;
+  /** Copy the hovered (or last-hovered) box's handle for agent handoff. */
+  copy(): void;
   getState(): { enabled: boolean; outlines: boolean; guides: boolean; labels: LabelMode };
   refresh(): void;
   destroy(): void;
@@ -113,6 +115,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
   let boxes: { el: Element; depth: number; rect: DOMRect }[] = [];
   let pointer: { x: number; y: number } | null = null;
   let hoverBox: (typeof boxes)[number] | null = null;
+  let lastHoverBox: (typeof boxes)[number] | null = null;
 
   // runtime layer toggles
   let outlinesOn = opts.sections;
@@ -355,11 +358,12 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
 
   /** Copy the hovered box's handle for handing to an agent. */
   function copyHandle() {
-    if (!hoverBox) return;
-    const el = hoverBox.el;
+    const target = hoverBox ?? lastHoverBox;
+    if (!target) return;
+    const el = target.el;
     const name = nameOf(el);
     const text = `${name ? `"${name}" — ` : ""}${selectorFor(el)} (<${el.tagName.toLowerCase()}>)`;
-    navigator.clipboard?.writeText(text).then(() => flashCopied(hoverBox!.rect)).catch(() => {});
+    navigator.clipboard?.writeText(text).then(() => flashCopied(target.rect)).catch(() => {});
   }
 
   function schedule() {
@@ -374,6 +378,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
   function onPointerMove(e: PointerEvent) {
     pointer = { x: e.clientX, y: e.clientY };
     hoverBox = boxAt(e.clientX, e.clientY);
+    if (hoverBox) lastHoverBox = hoverBox;
     drawLabels();
     drawMeasure();
   }
@@ -417,7 +422,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
     ro?.disconnect();
     mo?.disconnect();
     ro = mo = null;
-    pointer = hoverBox = null;
+    pointer = hoverBox = lastHoverBox = null;
     root?.remove();
     root = sectionsLayer = guidesLayer = labelsLayer = measureLayer = null;
     boxes = [];
@@ -507,6 +512,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
     cycleLabels,
     toggleOutlines,
     toggleGuides,
+    copy: copyHandle,
     getState: () => ({ enabled, outlines: outlinesOn, guides: guidesOn, labels: labels.mode }),
     refresh: drawSections,
     destroy() {
@@ -520,7 +526,7 @@ export function createDevLines(options: DevLinesOptions = {}): DevLinesControlle
 function noopController(): DevLinesController {
   return {
     enable() {}, disable() {}, toggle() {}, isEnabled: () => false,
-    cycleLabels() {}, toggleOutlines() {}, toggleGuides() {},
+    cycleLabels() {}, toggleOutlines() {}, toggleGuides() {}, copy() {},
     getState: () => ({ enabled: false, outlines: false, guides: false, labels: "off" }),
     refresh() {}, destroy() {},
   };
