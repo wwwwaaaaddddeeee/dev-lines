@@ -21,15 +21,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root {
-    --pink: 251 7 12; /* #fb070c */
+    --pink: 245 104 104; /* #f56868 coral — primary / center+width guide */
     --tb: 113 113 122; /* toolbar accent — muted neutral gray (#71717a) */
-    --cyan: 24 207 255;
-    --blue: 24 83 239;
-    --red: 242 26 50;
-    --green: 29 206 105;
-    --purple: 190 49 208;
-    --orange: 241 98 0;
-    --teal: 22 166 126;
+    --cyan: 167 125 255; /* #a77dff purple — padding guide */
+    --blue: 167 125 255; /* #a77dff purple */
+    --red: 245 104 104; /* #f56868 coral */
+    --green: 138 224 108; /* #8ae06c green */
+    --purple: 167 125 255; /* #a77dff purple */
+    --orange: 237 139 0; /* #ed8b00 orange */
+    --teal: 138 224 108; /* #8ae06c green */
     --ink: #0a0a0a;
     --muted: #6b7280;
     --faint: #9ca3af;
@@ -55,12 +55,20 @@
     flex-direction: column;
   }
   code, kbd, .mono { font-family: "Geist Mono", ui-monospace, monospace; }
-  .wrap { max-width: 640px; width: 100%; margin: 0 auto; padding: 0 24px 144px; text-align: center;
-    flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .wrap { max-width: 680px; width: 100%; margin: 0 auto; padding: 60px 24px 120px; text-align: center; flex: 1; }
+  /* everything reads centered: section headers centered, content blocks centered
+     in the column with readable left-aligned text inside */
+  .wrap > section { text-align: center; }
+  .install .panel { max-width: 460px; margin: 0 auto; text-align: left; }
+  .feat { max-width: 460px; margin: 0 auto; text-align: left; }
+  table { max-width: 430px; margin: 0 auto; }
+  td { text-align: left; }
+  .demo-hint { color: var(--faint); font-size: 13px; margin: 16px 0 0; }
+  .demo-hint kbd { font-size: 11px; }
   a { color: inherit; }
 
   /* floating toolbar, à la the real tool */
-  .toolbar { position: fixed; bottom: 130px; left: 50%; transform: translateX(-50%); z-index: 2147483601;
+  .toolbar { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 2147483601;
     display: flex; align-items: center; gap: 2px; background: #fff; border: 1px solid var(--hair);
     border-radius: 999px; padding: 5px; box-shadow: 0 6px 22px rgb(0 0 0 / .08); }
   .tb-btn { all: unset; cursor: pointer; width: 28px; height: 28px; border-radius: 999px; position: relative;
@@ -100,7 +108,7 @@
   .gh { color: var(--faint); display: inline-flex; margin-left: -3px; }
   .headline { font-size: 15px; line-height: 1.5; font-weight: 500; letter-spacing: -0.01em; margin: 22px 0 0; color: var(--muted); }
   .headline .dim { color: var(--faint); }
-  .sub { color: var(--muted); font-size: 16px; max-width: 30rem; margin: 26px 0 0; }
+  .sub { color: var(--muted); font-size: 16px; max-width: 30rem; margin: 26px auto 0; }
 
   /* hero showcase — the overlay rendered on a mini layout */
   .showcase {
@@ -113,7 +121,7 @@
   .mini .col { width: 70%; display: flex; flex-direction: column; gap: 18px; flex: 1; }
   .mini .deck { height: 96px; display: grid; place-items: center; }
   .mini .deck > div { width: 62%; height: 72%; border-radius: 8px;
-    background: linear-gradient(90deg,#4db8ff,#4de2c0,#9be84d,#ffd24d,#ff8a3d,#ff4d4d); opacity:.9; }
+    background: linear-gradient(90deg,#a77dff,#f56868,#ed8b00,#f1df38,#8ae06c); opacity:.9; }
   .mini .bar { height: 9px; border-radius: 3px; background: #e6e6ea; }
   .mini .bar.s { width: 56%; } .mini .bar.m { width: 84%; }
   .mini .row { display: flex; justify-content: space-between; align-items: center; }
@@ -265,9 +273,9 @@
      component captures its own touches via touch-action: none, so playing with
      it never scrolls or refreshes. */
   @media (max-width: 640px) {
-    html, body { min-height: 100dvh; }
-    .wrap { flex: 1; min-height: 0; padding-top: 28px; padding-bottom: 0; justify-content: flex-start; }
-    .depthdemo { margin-top: 28px; }
+    .wrap { padding-top: 40px; }
+    .cards { grid-template-columns: 1fr; }
+    .palette { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -303,11 +311,11 @@
       </div>
       <div class="tb-row"><span>Distances</span><span style="color:var(--faint)">hold Alt</span></div>
       <div class="tb-row"><span>Guide colors</span><span class="tb-sw">
-        <input type="color" id="c-line" value="#fb070c" title="Center &amp; width" />
-        <input type="color" id="c-pad" value="#18cfff" title="Padding" />
+        <input type="color" id="c-line" value="#f56868" title="Center &amp; width" />
+        <input type="color" id="c-pad" value="#a77dff" title="Padding" />
       </span></div>
       <div class="tb-row"><span>Depth palette</span><span class="tb-sw" id="c-depth">
-        <input type="color" value="#1d1d1d" /><input type="color" value="#9ba4b7" /><input type="color" value="#eb83f6" /><input type="color" value="#be31d0" /><input type="color" value="#1853ef" /><input type="color" value="#00a8ff" /><input type="color" value="#ffb522" /><input type="color" value="#f16200" /><input type="color" value="#16a67e" /><input type="color" value="#1dce69" /><input type="color" value="#ff8baa" /><input type="color" value="#f21a32" />
+        <input type="color" value="#1d1d1d" /><input type="color" value="#9ba4b7" /><input type="color" value="#a77dff" /><input type="color" value="#f56868" /><input type="color" value="#ed8b00" /><input type="color" value="#f1df38" /><input type="color" value="#8ae06c" />
       </span></div>
       <div class="keys"><b>O</b> outlines · <b>G</b> guides · <b>L</b> labels · <b>C</b> copy · <b>Alt</b> dist · <b>Esc</b> off</div>
     </div>
@@ -317,8 +325,8 @@
     <header class="hero">
       <div class="mark">
         <svg class="logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(255 0 0)" stroke-width="3.4" stroke-linecap="round"/>
-          <path d="M2 16h28" stroke="rgb(0 0 255)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M6 26 18 6M14 26 26 6" stroke="rgb(10 10 10)" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M2 16h28" stroke="rgb(10 10 10)" stroke-width="3.4" stroke-linecap="round"/>
         </svg>
         <span class="name">dev-lines</span>
         <span class="ver">v0.0.0</span>
@@ -328,19 +336,101 @@
       </div>
 
       <h1 class="headline">See the lines. <span class="dim">Before you ship the bug.</span></h1>
+      <p class="sub">A layout debug overlay — center/width/padding guides, depth-colored section outlines, labels, and spacing distances — for any page, in any framework. Zero dependencies.</p>
     </header>
 
     <section>
-      <div class="depthdemo" data-devlines-name="Depth demo"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"></div></div></div></div></div></div></div></div></div></div></div></div>
-      <label class="dd-switch"><input type="checkbox" id="dd-toggle" /><span class="track"></span> Show all 12 depths</label>
+      <div class="depthdemo" data-devlines-name="Depth demo"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"><div class="d"></div></div></div></div></div></div></div>
+      <label class="dd-switch"><input type="checkbox" id="dd-toggle" /><span class="track"></span> Show all 7 depths</label>
+      <p class="demo-hint">The toolbar below runs the <b>real engine</b> on this page — hit power, then <kbd>O</kbd> <kbd>G</kbd> <kbd>L</kbd>.</p>
+    </section>
+
+    <!-- INSTALL -->
+    <section class="left">
+      <h2>Install</h2>
+      <div style="text-align:center"><div class="setup-tabs" id="setup-tabs">
+        <button class="setup-tab active" data-tab="npm">npm</button>
+        <button class="setup-tab" data-tab="react">React</button>
+        <button class="setup-tab" data-tab="script">Script tag</button>
+      </div></div>
+
+      <div class="panel active" data-panel="npm">
+        <div class="step"><div class="num">1</div><div class="step-b">
+          <h3>Add the package</h3>
+          <div class="codeblock"><pre><span class="c">$</span> npm i -D <span class="s">@dev-lines/core</span></pre><button class="copy" data-copy="npm i -D @dev-lines/core">copy</button></div>
+        </div></div>
+        <div class="step"><div class="num">2</div><div class="step-b">
+          <h3>Create &amp; enable</h3>
+          <div class="codeblock"><pre><span class="k">import</span> { createDevLines } <span class="k">from</span> <span class="s">"@dev-lines/core"</span>;
+
+<span class="k">const</span> dl = <span class="k">createDevLines</span>({ contentWidth: <span class="s">1280</span>, paddingX: <span class="s">24</span> });
+dl.<span class="k">enable</span>(); <span class="c">// or toggle with ⌘/Ctrl+Shift+L</span></pre><button class="copy" data-copy='import { createDevLines } from "@dev-lines/core";
+
+const dl = createDevLines({ contentWidth: 1280, paddingX: 24 });
+dl.enable();'>copy</button></div>
+        </div></div>
+      </div>
+
+      <div class="panel" data-panel="react">
+        <div class="step"><div class="num">1</div><div class="step-b">
+          <h3>Add the package</h3>
+          <div class="codeblock"><pre><span class="c">$</span> npm i -D <span class="s">@dev-lines/core</span></pre><button class="copy" data-copy="npm i -D @dev-lines/core">copy</button></div>
+        </div></div>
+        <div class="step"><div class="num">2</div><div class="step-b">
+          <h3>Render it, gated to dev</h3>
+          <div class="codeblock"><pre><span class="k">import</span> { DevLines } <span class="k">from</span> <span class="s">"@dev-lines/core/react"</span>;
+
+{process.env.NODE_ENV === <span class="s">"development"</span> &amp;&amp; <span class="k">&lt;DevLines</span> contentWidth={<span class="s">1280</span>} paddingX={<span class="s">24</span>} <span class="k">/&gt;</span>}</pre><button class="copy" data-copy='import { DevLines } from "@dev-lines/core/react";
+
+{process.env.NODE_ENV === "development" && <DevLines contentWidth={1280} paddingX={24} />}'>copy</button></div>
+        </div></div>
+      </div>
+
+      <div class="panel" data-panel="script">
+        <div class="step"><div class="num">1</div><div class="step-b">
+          <h3>Drop in a module script — no build step</h3>
+          <div class="codeblock"><pre><span class="k">&lt;script</span> type=<span class="s">"module"</span><span class="k">&gt;</span>
+  <span class="k">import</span> { createDevLines } <span class="k">from</span> <span class="s">"https://esm.sh/@dev-lines/core"</span>;
+  <span class="k">createDevLines</span>({ contentWidth: <span class="s">1280</span>, paddingX: <span class="s">24</span>, start: <span class="s">true</span> });
+<span class="k">&lt;/script&gt;</span></pre><button class="copy" data-copy='&lt;script type="module"&gt;
+  import { createDevLines } from "https://esm.sh/@dev-lines/core";
+  createDevLines({ contentWidth: 1280, paddingX: 24, start: true });
+&lt;/script&gt;'>copy</button></div>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="left">
+      <h2>What you get</h2>
+      <div class="feat"><span class="ic">+</span><span><b>Guides</b> — viewport center cross, plus optional content-width and padding edges.</span></div>
+      <div class="feat"><span class="ic">+</span><span><b>Depth outlines</b> — colored rings around every flex/grid container, up to 12 nesting depths.</span></div>
+      <div class="feat"><span class="ic">+</span><span><b>Labels</b> — name · tag · size · layout, on hover or all at once.</span></div>
+      <div class="feat"><span class="ic">+</span><span><b>Distances</b> — hold <kbd>Alt</kbd> to measure the gaps from a box to its container.</span></div>
+      <div class="feat"><span class="ic">+</span><span><b>Agent handoff</b> — press <kbd>C</kbd> to copy a box's handle (name · selector · tag) for an AI coding agent.</span></div>
+      <div class="feat"><span class="ic">+</span><span><b>Non-invasive</b> — one fixed overlay layer, never mutates your DOM. Zero dependencies.</span></div>
+    </section>
+
+    <!-- KEYBOARD -->
+    <section class="left">
+      <h2>Keyboard</h2>
+      <table>
+        <tr><td><kbd>⌘/Ctrl</kbd> <kbd>⇧</kbd> <kbd>L</kbd></td><td class="desc">toggle the overlay</td></tr>
+        <tr><td><kbd>O</kbd></td><td class="desc">toggle outlines</td></tr>
+        <tr><td><kbd>G</kbd></td><td class="desc">toggle guides</td></tr>
+        <tr><td><kbd>L</kbd></td><td class="desc">cycle labels — off → hover → all</td></tr>
+        <tr><td><kbd>C</kbd></td><td class="desc">copy hovered box's handle</td></tr>
+        <tr><td><kbd>Alt</kbd> <span class="desc">(hold)</span></td><td class="desc">show spacing distances</td></tr>
+        <tr><td><kbd>Esc</kbd></td><td class="desc">disable</td></tr>
+      </table>
     </section>
 
   </div>
   <footer>
     <div class="left">
       <svg class="foot-logo" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-        <path d="M6 26 18 6M14 26 26 6" stroke="rgb(255 0 0)" stroke-width="3.4" stroke-linecap="round"/>
-        <path d="M2 16h28" stroke="rgb(0 0 255)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M6 26 18 6M14 26 26 6" stroke="rgb(10 10 10)" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M2 16h28" stroke="rgb(10 10 10)" stroke-width="3.4" stroke-linecap="round"/>
       </svg>
       <span class="lic">© 2026 <a href="https://www.wa-de.org" target="_blank" rel="noopener noreferrer">wa-de</a> · <a href="#">MIT License</a></span>
     </div>
@@ -348,7 +438,7 @@
   <!-- live: run the real engine on this very page, driven by the toolbar -->
   <script type="module">
     import { createDevLines } from "./dev-lines.js";
-    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false, lineColor: "251 7 12" });
+    const dl = createDevLines({ contentWidth: 640, paddingX: 24, start: false, lineColor: "245 104 104" });
     const $ = (id) => document.getElementById(id);
     const power = $("tb-power"), guides = $("tb-guides"), outlines = $("tb-outlines"),
           labels = $("tb-labels"), copy = $("tb-copy"), more = $("tb-more"),
@@ -383,7 +473,7 @@
     cDepth.addEventListener("input", () => { ensureOn(); dl.update({ depthColors: [...cDepth.querySelectorAll("input")].map((i) => triplet(i.value)) }); });
 
     // depth → color demo: paint the nested chain its depth colors on toggle
-    const DEPTH = ["29 29 29","155 164 183","235 131 246","190 49 208","24 83 239","0 168 255","255 181 34","241 98 0","22 166 126","29 206 105","255 139 170","242 26 50"];
+    const DEPTH = ["29 29 29","155 164 183","167 125 255","245 104 104","237 139 0","241 223 56","138 224 108"];
     const ddToggle = $("dd-toggle"), depthdemo = document.querySelector(".depthdemo");
     if (ddToggle && depthdemo) {
       const chain = [depthdemo];
@@ -424,17 +514,23 @@
     window.addEventListener("keydown", () => requestAnimationFrame(sync)); // reflect ⌘⇧L / O / G / L
     sync();
 
-    // park the toolbar in the middle of the open space between the box and the footer
-    const demoSection = document.querySelector("section"), footEl = document.querySelector("footer");
-    function placeBar() {
-      const mid = (demoSection.getBoundingClientRect().bottom + footEl.getBoundingClientRect().top) / 2;
-      bar.style.top = mid + "px";
-      bar.style.bottom = "auto";
-      bar.style.transform = "translate(-50%, -50%)";
-    }
-    placeBar();
-    window.addEventListener("resize", placeBar);
-    window.addEventListener("load", placeBar);
+    // install tabs: switch panels
+    const tabs = document.getElementById("setup-tabs");
+    if (tabs) tabs.addEventListener("click", (e) => {
+      const t = e.target.closest(".setup-tab"); if (!t) return;
+      tabs.querySelectorAll(".setup-tab").forEach((b) => b.classList.toggle("active", b === t));
+      document.querySelectorAll(".panel").forEach((p) => p.classList.toggle("active", p.dataset.panel === t.dataset.tab));
+    });
+
+    // copy buttons on code blocks
+    document.querySelectorAll(".codeblock .copy").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        navigator.clipboard?.writeText(btn.dataset.copy || "").then(() => {
+          const prev = btn.textContent; btn.textContent = "copied ✓";
+          setTimeout(() => { btn.textContent = prev; }, 1200);
+        }).catch(() => {});
+      });
+    });
   </script>
 </body>
 </html>

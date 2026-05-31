@@ -1,39 +1,29 @@
-// ../core/src/index.ts
+// packages/core/src/index.ts
 var STORAGE_KEY = "dev-lines:enabled";
 var Z = 2147483600;
 var DEFAULT_DEPTH_COLORS = [
   "29 29 29",
-  // #1d1d1d graphite
+  // #1d1d1d neutral (graphite)
   "155 164 183",
-  // #9ba4b7 gray
-  "235 131 246",
-  // #eb83f6 lilac
-  "190 49 208",
-  // #be31d0 purple
-  "24 83 239",
-  // #1853ef blue
-  "0 168 255",
-  // #00a8ff sky
-  "255 181 34",
-  // #ffb522 amber
-  "241 98 0",
-  // #f16200 orange
-  "22 166 126",
-  // #16a67e teal-green
-  "29 206 105",
-  // #1dce69 green
-  "255 139 170",
-  // #ff8baa coral
-  "242 26 50"
-  // #f21a32 red
+  // #9ba4b7 neutral (gray)
+  "167 125 255",
+  // #a77dff purple
+  "245 104 104",
+  // #f56868 coral
+  "237 139 0",
+  // #ed8b00 orange
+  "241 223 56",
+  // #f1df38 yellow
+  "138 224 108"
+  // #8ae06c green
 ];
 var DEFAULTS = {
-  lineColor: "251 7 12",
-  // #fb070c
-  paddingColor: "24 207 255",
-  // #18cfff
-  measureColor: "255 159 10",
-  // #ff9f0a
+  lineColor: "245 104 104",
+  // #f56868 coral
+  paddingColor: "167 125 255",
+  // #a77dff purple
+  measureColor: "237 139 0",
+  // #ed8b00 orange
   sections: true,
   shortcut: "mod+shift+l",
   labelKey: "l",
