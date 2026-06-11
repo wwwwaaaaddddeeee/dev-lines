@@ -7,11 +7,11 @@
   "homepage": "https://lines.wiki",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wwwwaaaaddddeeee/dev-lines.git",
+    "url": "git+https://github.com/w-ade/dev-lines.git",
     "directory": "packages/core"
   },
   "bugs": {
-    "url": "https://github.com/wwwwaaaaddddeeee/dev-lines/issues"
+    "url": "https://github.com/w-ade/dev-lines/issues"
   },
   "keywords": [
     "debug",
