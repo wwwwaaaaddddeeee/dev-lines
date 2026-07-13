@@ -22,7 +22,10 @@ dev-lines draws a debug overlay *on top of* your page without mutating the DOM. 
 - 🌈 **Outlines** — depth-colored rings around every flex/grid container (up to 12 nesting depths)
 - 🏷️ **Labels** — name · tag · size · layout, shown on hover or all at once
 - 📏 **Distances** — hold **Alt** to measure spacing from a box to its container
-- 📋 **Agent handoff** — press **C** to copy a box's handle (name · selector · tag) to paste to an AI coding agent
+- 🧊 **Box model** — the hovered box shows its padding and flex/grid gaps as tinted bands (**B** toggles)
+- 🔍 **Inspect** — press **I** to lock a box, then walk the tree with the arrow keys
+- 📋 **Agent handoff** — press **C** to copy a box's handle (name · selector · tag · size · display · padding · gap) to paste to an AI coding agent
+- 🎛️ **Toolbar** — an optional on-page pill (`toolbar: true`), the same one running on [lines.wiki](https://lines.wiki)
 
 ## Quick start
 
@@ -53,9 +56,11 @@ import { DevLines } from "@dev-lines/core/react";
 | `O` | toggle outlines |
 | `G` | toggle guides |
 | `L` | cycle labels (off → hover → all) |
-| `C` | copy hovered box's handle |
+| `I` | lock inspect on a box — arrows walk the tree |
+| `B` | toggle box-model bands (padding + gap) |
+| `C` | copy the locked/hovered box's handle |
 | `Alt` (hold) | show spacing distances |
-| `Esc` | disable |
+| `Esc` | unlock inspect · disable |
 
 Full options and the controller API are documented in **[packages/core/README.md](./packages/core/README.md)**.
 

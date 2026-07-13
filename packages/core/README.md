@@ -8,7 +8,10 @@ A framework-agnostic **layout debug overlay**. Draws guides, depth-colored secti
 - 🌈 Depth-colored outlines around every flex/grid container (up to 12 depths)
 - 🏷️ Labels: name · tag · size · layout, per-box or all-at-once
 - 📏 Hold **Alt** for spacing distances from a box to its container
-- 📋 Press **C** to copy a box's handle (name · selector · tag) for handing to an AI agent
+- 🧊 Box-model bands: padding + flex/grid gaps on the hovered box (**B**)
+- 🔍 Inspect: **I** locks a box, arrow keys walk the tree
+- 📋 Press **C** to copy a box's handle (name · selector · tag · size · display · padding · gap) for handing to an AI agent
+- 🎛️ Optional on-page toolbar pill (`toolbar: true`)
 - ⚡ Zero dependencies. React optional.
 
 ## Install
@@ -33,9 +36,11 @@ Toggle anytime with **⌘/Ctrl + Shift + L**. Once enabled:
 | `O` | toggle outlines |
 | `G` | toggle guides |
 | `L` | cycle labels (off → hover → all) |
-| `C` | copy hovered box's handle |
+| `I` | lock inspect on a box — arrows walk the tree (↑ parent, ↓ child, ←/→ siblings) |
+| `B` | toggle box-model bands (padding + gap) |
+| `C` | copy the locked/hovered box's handle |
 | `Alt` (hold) | show spacing distances |
-| `Esc` | disable |
+| `Esc` | unlock inspect · disable |
 
 ## Usage (React)
 
@@ -72,6 +77,11 @@ All optional. Colors are space-separated RGB triplets (e.g. `"245 104 104"`).
 | `nameAttr` | `"data-devlines-name"` | Attribute read for a box's explicit name |
 | `autoName` | `true` | Derive names from id / aria-label / component / heading |
 | `copyKey` | `"c"` | Key to copy a box handle (`null` to disable) |
+| `inspectKey` | `"i"` | Key to lock/unlock inspect (`null` to disable) |
+| `boxModel` | `true` | Show padding + gap bands on the hovered/locked box |
+| `boxModelKey` | `"b"` | Key to toggle the box-model bands (`null` to disable) |
+| `gapColor` | `"138 224 108"` | Gap band color (green) |
+| `toolbar` | `false` | Mount the on-page toolbar pill |
 | `shortcut` | `"mod+shift+l"` | Toggle shortcut (`null` to disable) |
 | `labelKey` | `"l"` | Cycle-labels key (`null` to disable) |
 | `persist` | `true` | Remember on/off across reloads via localStorage |
@@ -90,9 +100,11 @@ interface DevLinesController {
   cycleLabels(mode?: "off" | "hover" | "all"): void;
   toggleOutlines(on?: boolean): void;
   toggleGuides(on?: boolean): void;
-  update(options): void;   // live-update colors / contentWidth / paddingX and redraw
-  copy(): void;            // copy hovered box's handle
-  getState(): { enabled, outlines, guides, labels };
+  toggleBoxModel(on?: boolean): void;
+  inspect(el?: Element | null): void;  // lock inspect (null unlocks, no arg toggles on hover)
+  update(options): void;   // live-update colors / widths / labels and redraw
+  copy(): void;            // copy the locked/hovered box's handle
+  getState(): { enabled, outlines, guides, labels, boxModel, inspected };
   refresh(): void;
   destroy(): void;
 }

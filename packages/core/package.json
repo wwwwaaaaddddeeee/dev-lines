@@ -1,6 +1,6 @@
 {
   "name": "@dev-lines/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic layout debug overlay: center/width/padding guides + depth-colored section outlines, labels, and distances. Zero dependencies.",
   "license": "MIT",
   "author": "wa-de (https://www.wa-de.org)",
@@ -46,6 +46,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.ts src/react.tsx --format esm --dts --clean",
+    "build:site": "tsup src/index.ts --format esm --clean false -d ../../demo && mv ../../demo/index.js ../../demo/dev-lines.js",
     "dev": "tsup src/index.ts src/react.tsx --format esm --dts --watch"
   },
   "peerDependencies": {

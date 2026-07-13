@@ -2,6 +2,20 @@
 
 All notable changes to **dev-lines**. Format follows [Keep a Changelog](https://keepachangelog.com); versioning is [SemVer](https://semver.org).
 
+## [0.2.0] — 2026-07-13
+
+### Added
+- **Inspect mode** — press `I` to lock onto the hovered box; the arrow keys walk the tree (↑ parent, ↓ first child, ←/→ siblings); `Esc` unlocks. The locked box keeps its label and gets a solid ring; `C` and `Alt` target it.
+- **Box model** — the hovered/locked box shows its padding and flex/grid gaps as tinted bands, DevTools-style. Toggle with `B`, configure via `boxModel` / `gapColor`.
+- **On-page toolbar** — the pill from lines.wiki now ships inside the engine: `toolbar: true` mounts power · guides · outlines · labels · copy · settings, with live color controls. No keyboard needed.
+- **Richer agent handoff** — `C` now copies a two-line handle: `"Name" — selector (<tag>)` plus `size · display · padding · gap`, ready to paste to an AI coding agent.
+- New controller methods: `inspect(el?)`, `toggleBoxModel(on?)`; `getState()` now reports `boxModel` and the `inspected` element.
+- `update()` now also applies `labels`, `gapColor`, `sectionSelector`, `nameAttr`, `autoName`, and `boxModel` live.
+
+### Fixed
+- The overlay no longer observes its own DOM writes — previously the MutationObserver scheduled a redraw for every frame the overlay was enabled.
+- Alt-distances no longer stick when the window loses focus mid-hold (Alt+Tab).
+
 ## [0.1.0] — 2026-05-30
 
 First npm release of `@dev-lines/core`.

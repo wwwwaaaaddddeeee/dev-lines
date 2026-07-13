@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "dev-lines",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "Layout guides, depth-colored outlines, labels & distances on any page — toggle with the popup or ⌘/Ctrl+Shift+L.",
   "action": {
     "default_popup": "popup.html",
